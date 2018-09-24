@@ -1,21 +1,38 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
+// import LoginPage from './components/login/LoginPage'
+// import SignupPage from './components/signup/SignupPage'
+// import LogoutPage from './components/logout/LogoutPage'
+import './App.css'
+// import TopBar from './components/layout/TopBar'
+
+import {apiUrl} from './constants'
+
+import EventsListContainer from './components/EventsListContainer'
+
 
 class App extends Component {
   render() {
+    console.log(`Api base url: ${apiUrl}`)
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <Router>
+        <div className="App">
+          {/* <nav>
+            <TopBar />
+          </nav> */}
+          <main style={{marginTop:75}}>
+            {/* <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/logout" component={LogoutPage} />
+            <Route exact path="/signup" component={SignupPage} /> */}
+            <Route exact path="/events" component={EventsListContainer} />
+            {/* <Route exact path="/events/:id" component={EventDetailsContainer} /> */}
+            <Route exact path="/" render={ () => <Redirect to="/events" /> } />
+          </main>
+        </div>
+      </Router>
     );
   }
 }
 
 export default App;
+  
