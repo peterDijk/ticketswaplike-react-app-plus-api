@@ -1,0 +1,47 @@
+Arguments: 
+  /Users/petervandijk/.nvm/versions/node/v8.5.0/bin/node /usr/local/Cellar/yarn/1.9.4/libexec/bin/yarn.js add bcrypt jsonwebtoken kcors koa koa-bodyparser koa-multer koa-router nodemon pg routing-controllers socket.io kocketio-jwt-auth ts-node typeorm typescript
+
+PATH: 
+  /Users/petervandijk/.nvm/versions/node/v8.5.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
+
+Yarn version: 
+  1.9.4
+
+Node version: 
+  8.5.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/kocketio-jwt-auth: Not found
+      at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.9.4/libexec/lib/cli.js:64202:18)
+      at Request.self.callback (/usr/local/Cellar/yarn/1.9.4/libexec/lib/cli.js:137468:22)
+      at emitTwo (events.js:125:13)
+      at Request.emit (events.js:213:7)
+      at Request.<anonymous> (/usr/local/Cellar/yarn/1.9.4/libexec/lib/cli.js:138440:10)
+      at emitOne (events.js:115:13)
+      at Request.emit (events.js:210:7)
+      at IncomingMessage.<anonymous> (/usr/local/Cellar/yarn/1.9.4/libexec/lib/cli.js:138362:12)
+      at Object.onceWrapper (events.js:314:30)
+      at emitNone (events.js:110:20)
+
+npm manifest: 
+  {
+    "name": "uber-for-tickets-server",
+    "version": "1.0.0",
+    "main": "target/index.js",
+    "private": true,
+    "scripts": {
+      "start": "nodemon",
+      "test": "node_modules/.bin/mocha --require ts-node/register src/**/*.spec.ts",
+      "watch": "node_modules/.bin/tsc -w",
+      "compile": "node_modules/.bin/tsc -p ."
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
