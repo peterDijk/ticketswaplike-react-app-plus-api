@@ -1,4 +1,5 @@
 import {JsonController, Get, Post, HttpCode, BodyParam, Param, BadRequestError, QueryParam} from 'routing-controllers'
+import {pageLimitTickets} from '../constants'
 import {Ticket} from './entity'
 import {Event} from '../events/entity'
 // import { MoreThan} from 'typeorm'
@@ -37,7 +38,7 @@ export default class TicketController {
     const count = await Ticket.count({where: {event}})
 
     if (!page) page = 1
-    const take = 2
+    const take = pageLimitTickets
     const skip = (page -1) * take
 
     if (!orderBy) orderBy = 'dateCreated'

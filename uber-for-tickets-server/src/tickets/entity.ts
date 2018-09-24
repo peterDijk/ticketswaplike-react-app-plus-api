@@ -9,7 +9,7 @@ export class Ticket extends BaseEntity {
   @PrimaryGeneratedColumn()
   id?: number
 
-  @Column('float', {nullable: true})
+  @Column('decimal', {nullable: false})
   price: number
 
   @Column('text', {nullable: false})

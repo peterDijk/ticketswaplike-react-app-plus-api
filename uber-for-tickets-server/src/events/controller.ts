@@ -1,4 +1,5 @@
 import {JsonController, Get, Post, Put, HttpCode, Body, BodyParam, Param, NotFoundError, QueryParam} from 'routing-controllers'
+import {pageLimitEvents} from '../constants'
 import {Event} from './entity'
 import { MoreThan} from 'typeorm'
 
@@ -35,7 +36,7 @@ export default class EventController {
     const count = await Event.count({where: {endDate : MoreThan(dateNow)}})
 
     if (!page) page = 1
-    const take = 9
+    const take = pageLimitEvents
     const skip = (page -1) * take
     const totalPages = count / take
     let next
