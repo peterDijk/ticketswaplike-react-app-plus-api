@@ -14,8 +14,10 @@ class EventsListContainer extends React.PureComponent {
     this.loadPagEvents()
   }
 
-  componentDidUpdate() {
-    this.loadPagEvents()
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.location.search !== this.props.location.search) {
+      this.loadPagEvents()
+    }
   }
 
   loadPagEvents = () => {

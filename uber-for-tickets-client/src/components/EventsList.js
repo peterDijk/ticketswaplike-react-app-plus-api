@@ -18,13 +18,13 @@ function EventsList({events, count, next, previous, classes }) {
   return (
     <div>
       <EventsListPagination count={count} next={next} previous={previous}/>
-      
+
       <Grid container direction="row" justify="center" spacing={24}>
         {events.map(event => (
           <Grid key={event.id} item xs={12} sm={6} md={4} lg={3}>
             <Card className={classes.card}>
               <Link to={`/events/${event.id}`}>
-                <CardActionArea>
+                <CardActionArea style={{width: '100%'}}>
                   <CardMedia
                     className={classes.media}
                     image={event.imageUrl}
