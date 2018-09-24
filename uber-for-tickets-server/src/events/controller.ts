@@ -23,13 +23,18 @@ export default class EventController {
     @QueryParam('skip') skip: number,
     @QueryParam('take') take: number,
     @QueryParam('by') by: string,
-    @QueryParam('order') order: string
+    @QueryParam('order') order: string,
+    @QueryParam('showAll') showAll: boolean
   ) {
     if (!skip) skip = 0
     if (!take) take = 3
     if (!by) by = 'dateCreated'
     if (!order) order = 'ASC'
-    const dateNow = new Date()
+    
+    let dateNow = new Date()
+    if (showAll) dateNow = new Date('1970-01-01T00:00:00')
+    
+    
     const events = await Event.find({ order: { [by]: order }, skip, take, where: {endDate : MoreThan(dateNow)} })
     return { events }
   }
