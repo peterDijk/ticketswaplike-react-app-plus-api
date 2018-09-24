@@ -31,7 +31,7 @@ class EventsListContainer extends React.PureComponent {
     const {events} = this.props
     if (events.length === 0) return 'Loading events...'
     return (
-        <EventsList events={events.list} count={events.count} next={events.next} previous={events.previous}/>
+        <EventsList events={events} />
     )
   }
 }

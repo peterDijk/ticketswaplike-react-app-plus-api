@@ -2,7 +2,7 @@ import * as React from 'react'
 import {connect} from 'react-redux'
 import queryString from 'query-string'
 import {userId} from '../jwt'
-// import EventTicketsList from './EventTicketsList'
+import EventTicketsList from './EventTicketsList'
 
 
 import {loadTickets} from '../actions/tickets'
@@ -20,7 +20,6 @@ class EventsListContainer extends React.PureComponent {
   }
 
   loadPagTickets = () => {
-    console.log(this.props.match)
     const values = queryString.parse(this.props.location.search)
     const {eventId} = this.props.match.params
     if (!values.page) values.page = 1
@@ -30,7 +29,11 @@ class EventsListContainer extends React.PureComponent {
   }
 
   render() {
-    return null
+    const {tickets} = this.props
+    if (tickets.length === 0) return 'Loading tickets...'
+    return (
+      <EventTicketsList tickets={tickets}/> 
+    )
   }
 
 }

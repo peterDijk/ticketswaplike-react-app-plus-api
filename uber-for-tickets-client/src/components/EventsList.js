@@ -1,7 +1,7 @@
 import React from 'react'
 import {Redirect} from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
-import EventsListPagination from './EventsListPagination'
+import ListPagination from './EventsListPagination'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -14,13 +14,14 @@ import Typography from '@material-ui/core/Typography';
 
 import {Link} from 'react-router-dom'
 
-function EventsList({events, count, next, previous, classes }) {
+function EventsList({events, classes }) {
+  const {list, count, next, previous} = events
   return (
     <div>
-      <EventsListPagination count={count} next={next} previous={previous}/>
+      <ListPagination count={count} next={next} previous={previous}/>
 
       <Grid container direction="row" justify="center" spacing={24}>
-        {events.map(event => (
+        {list.map(event => (
           <Grid key={event.id} item xs={12} sm={6} md={4} lg={3}>
             <Card className={classes.card}>
               <Link to={`/events/${event.id}/tickets`}>
