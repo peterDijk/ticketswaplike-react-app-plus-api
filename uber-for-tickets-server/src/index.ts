@@ -8,6 +8,8 @@ import * as IO from 'socket.io'
 // import * as socketIoJwtAuth from 'socketio-jwt-auth'
 // import {secret} from './jwt'
 
+import EventController from './events/controller'
+
 const app = new Koa()
 const server = new Server(app.callback())
 export const io = IO(server)
@@ -16,6 +18,7 @@ const port = process.env.PORT || 4000
 useKoaServer(app, {
   cors: true,
   controllers: [
+    EventController
   ],
   authorizationChecker: (action: Action) => {
     const header: string = action.request.headers.authorization
