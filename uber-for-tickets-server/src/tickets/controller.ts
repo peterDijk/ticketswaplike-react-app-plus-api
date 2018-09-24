@@ -54,6 +54,6 @@ export default class TicketController {
     if (page > 1) previous = `/events/${eventId}/tickets/?page=${page-1}`
     else previous = null
 
-    return {count, next, previous, tickets}
+    return {count, next, previous, tickets, event}
   }
 }

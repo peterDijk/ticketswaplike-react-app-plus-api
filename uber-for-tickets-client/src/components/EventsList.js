@@ -23,7 +23,7 @@ function EventsList({events, count, next, previous, classes }) {
         {events.map(event => (
           <Grid key={event.id} item xs={12} sm={6} md={4} lg={3}>
             <Card className={classes.card}>
-              <Link to={`/events/${event.id}`}>
+              <Link to={`/events/${event.id}/tickets`}>
                 <CardActionArea style={{width: '100%'}}>
                   <CardMedia
                     className={classes.media}

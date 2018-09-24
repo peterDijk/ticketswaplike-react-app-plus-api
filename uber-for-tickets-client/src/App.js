@@ -9,6 +9,7 @@ import './App.css'
 import {apiUrl} from './constants'
 
 import EventsListContainer from './components/EventsListContainer'
+import EventTicketsListContainer from './components/EventTicketsListContainer'
 
 
 class App extends Component {
@@ -25,7 +26,7 @@ class App extends Component {
             <Route exact path="/logout" component={LogoutPage} />
             <Route exact path="/signup" component={SignupPage} /> */}
             <Route exact path="/events" component={EventsListContainer} />
-            {/* <Route exact path="/events/:id" component={EventDetailsContainer} /> */}
+            <Route exact path="/events/:eventId/tickets" component={EventTicketsListContainer} />
             <Route exact path="/" render={ () => <Redirect to="/events" /> } />
           </main>
         </div>

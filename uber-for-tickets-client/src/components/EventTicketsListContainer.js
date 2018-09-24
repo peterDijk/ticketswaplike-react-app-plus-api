@@ -2,46 +2,46 @@ import * as React from 'react'
 import {connect} from 'react-redux'
 import queryString from 'query-string'
 import {userId} from '../jwt'
-import EventsList from './EventsList'
+// import EventTicketsList from './EventTicketsList'
 
 
-import {loadEvents} from '../actions/events'
+import {loadTickets} from '../actions/tickets'
 
 class EventsListContainer extends React.PureComponent {
 
   componentDidMount() {
-    this.loadPagEvents()
+    this.loadPagTickets()
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.location.search !== this.props.location.search) {
-      this.loadPagEvents()
+      this.loadPagTickets()
     }
   }
 
-  loadPagEvents = () => {
+  loadPagTickets = () => {
+    console.log(this.props.match)
     const values = queryString.parse(this.props.location.search)
+    const {eventId} = this.props.match.params
     if (!values.page) values.page = 1
     if (!values.orderBy) values.orderBy = 'dateCreated'
-    if (!values.direction) values.direction = 'ASC'
-    this.props.loadEvents(`page=${values.page}`, `orderBy=${values.orderBy}`, `direction=${values.direction}`)
+    if (!values.direction) values.direction = 'DESC'
+    this.props.loadTickets(eventId, `page=${values.page}`, `orderBy=${values.orderBy}`, `direction=${values.direction}`)
   }
 
   render() {
-    const {events} = this.props
-    if (events.length === 0) return 'Loading events...'
-    return (
-        <EventsList events={events.list} count={events.count} next={events.next} previous={events.previous}/>
-    )
+    return null
   }
+
 }
 
+
 const mapStateToProps = (state) => ({
-  events: state.events
+  tickets: state.tickets
 })
 
 const mapDispatchtoProps = {
-  loadEvents
+  loadTickets
 }
 
 export default connect(mapStateToProps, mapDispatchtoProps)(EventsListContainer)
