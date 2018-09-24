@@ -32,7 +32,7 @@ export default class EventController {
     if (!order) order = 'ASC'
     
     let dateNow = new Date()
-    if (showAll) dateNow = new Date('1970-01-01T00:00:00')
+    if (showAll === true) dateNow = new Date('1970-01-01T00:00:00')
     
     
     const events = await Event.find({ order: { [by]: order }, skip, take, where: {endDate : MoreThan(dateNow)} })
