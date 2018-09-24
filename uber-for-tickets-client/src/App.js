@@ -10,6 +10,7 @@ import {apiUrl} from './constants'
 
 import EventsListContainer from './components/EventsListContainer'
 import EventTicketsListContainer from './components/EventTicketsListContainer'
+import TicketDetailsContainer from './components/TicketDetailsContainer'
 
 
 class App extends Component {
@@ -27,6 +28,7 @@ class App extends Component {
             <Route exact path="/signup" component={SignupPage} /> */}
             <Route exact path="/events" component={EventsListContainer} />
             <Route exact path="/events/:eventId/tickets" component={EventTicketsListContainer} />
+            <Route exact path="/tickets/:ticketId" component={TicketDetailsContainer} />
             <Route exact path="/" render={ () => <Redirect to="/events" /> } />
           </main>
         </div>

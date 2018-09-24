@@ -57,4 +57,13 @@ export default class TicketController {
 
     return {count, next, previous, tickets, event}
   }
+
+  @Get('/tickets/:ticketId')
+  async getOneTicket(
+    @Param('ticketId') ticketId: number
+  ) {
+    const ticket = await Ticket.findOne(ticketId, {relations: ['event']})
+    if (!ticket) throw new BadRequestError(`Ticket does not exist`)
+    return ticket
+  }
 }
