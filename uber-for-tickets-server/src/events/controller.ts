@@ -1,6 +1,6 @@
 import {JsonController, Get, Post, Put, HttpCode, Body, BodyParam, Param, NotFoundError, QueryParam} from 'routing-controllers'
 import {Event} from './entity'
-import {MoreThan} from 'typeorm'
+import { MoreThan} from 'typeorm'
 
 @JsonController()
 export default class EventController {
@@ -20,23 +20,34 @@ export default class EventController {
 
   @Get('/events')
   async allEvents(
-    @QueryParam('skip') skip: number,
-    @QueryParam('take') take: number,
-    @QueryParam('by') by: string,
-    @QueryParam('order') order: string,
-    @QueryParam('showAll') showAll: boolean
+    @QueryParam('orderBy') orderBy: string,
+    @QueryParam('direction') direction: string,
+    @QueryParam('showAll') showAll: boolean,
+    @QueryParam('page') page: number
   ) {
-    if (!skip) skip = 0
-    if (!take) take = 9
-    if (!by) by = 'dateCreated'
-    if (!order) order = 'ASC'
+
+    if (!orderBy) orderBy = 'dateCreated'
+    if (!direction) direction = 'ASC'
     
     let dateNow = new Date()
     if (showAll === true) dateNow = new Date('1970-01-01T00:00:00')
-    
-    
-    const events = await Event.find({ order: { [by]: order }, skip, take, where: {endDate : MoreThan(dateNow)} })
-    return { events }
+
+    const count = await Event.count({where: {endDate : MoreThan(dateNow)}})
+
+    if (!page) page = 1
+    const take = 9
+    const skip = (page -1) * take
+    const totalPages = count / take
+    let next
+    let previous
+
+    if (totalPages > page) next = `/events/?page=${page+1}`
+    else next = null
+    if (page > 1) previous = `/events/?page=${page-1}`
+    else previous = null
+  
+    const events = await Event.find({ order: { [orderBy]: direction }, skip, take, where: {endDate : MoreThan(dateNow)} })
+    return { count, next, previous ,events }
   }
 
   @Get('/events/:id')
