@@ -27,7 +27,7 @@ export default class EventController {
     @QueryParam('showAll') showAll: boolean
   ) {
     if (!skip) skip = 0
-    if (!take) take = 3
+    if (!take) take = 9
     if (!by) by = 'dateCreated'
     if (!order) order = 'ASC'
     
