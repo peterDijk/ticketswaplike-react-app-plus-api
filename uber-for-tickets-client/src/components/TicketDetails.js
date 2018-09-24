@@ -8,7 +8,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography'
 // import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
-import ListPagination from './EventsListPagination'
 
 import {Link} from 'react-router-dom'
 
@@ -21,13 +20,14 @@ function TicketDetails({ticket}) {
           <Grid container direction="row" justify="center" spacing={24}>
             <Grid item>
               <Typography variant="display3">Ticket for: {ticket.event.name}</Typography>
-              <Typography variant="display1">{ticket.event.desc}</Typography>
+              {/* <Typography variant="display1">{ticket.event.desc}</Typography> */}
               <img src={ticket.event.imageUrl || `http://thechurchontheway.org/wp-content/uploads/2016/05/placeholder1.png`} width={400} alt=""/>
               <Typography>starts: {formatDateTime(ticket.event.startDate)}</Typography>
               <Typography>ends: {formatDateTime(ticket.event.endDate)}</Typography>
             </Grid>
             <Grid item>
               <Typography variant="headline">Price: {ticket.price}</Typography>
+              <Typography>Description: {ticket.desc}</Typography>
             </Grid>
           </Grid>
         </Paper>

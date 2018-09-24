@@ -8,7 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography'
 // import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
-import ListPagination from './EventsListPagination'
+import ListPagination from './ListPagination'
 
 import {Link} from 'react-router-dom'
 
