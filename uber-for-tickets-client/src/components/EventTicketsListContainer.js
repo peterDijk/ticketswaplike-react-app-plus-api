@@ -1,7 +1,6 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
 import queryString from 'query-string'
-import {userId} from '../jwt'
 import EventTicketsList from './EventTicketsList'
 
 

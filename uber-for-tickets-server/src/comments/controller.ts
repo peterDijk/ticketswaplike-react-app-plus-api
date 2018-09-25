@@ -51,9 +51,9 @@ export default class CommentController {
     let next
     let previous
 
-    if (totalPages > page) next = `/tickets/${ticketId}/comments/?page=${page+1}`
+    if (totalPages > page) next = `/tickets/${ticketId}/?page=${page+1}`
     else next = null
-    if (page > 1) previous = `/tickets/${ticketId}/comments/?page=${page-1}`
+    if (page > 1) previous = `/tickets/${ticketId}/?page=${page-1}`
     else previous = null
 
     return {count, next, previous, comments, ticket}

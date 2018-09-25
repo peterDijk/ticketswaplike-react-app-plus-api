@@ -41,10 +41,10 @@ export async function getFraudRisk(ticketId) {
       }
 }
 
-export function loadComments(ticketId) {
+export function loadComments(ticketId, pagination, orderBy, direction) {
   return async (dispatch) => {
     try {
-      const request = await axios(`${apiUrl}/tickets/${ticketId}/comments`)
+      const request = await axios(`${apiUrl}/tickets/${ticketId}/comments/?${pagination}&${orderBy}&${direction}`)
       dispatch(commentsLoaded(request.data))
     }
     catch (error) {

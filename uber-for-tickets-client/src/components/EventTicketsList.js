@@ -38,6 +38,7 @@ function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmit
 
 
           <List component="nav">
+            {list.length === 0 && <Typography>no ticket for this event yet..</Typography>}
             {list.map(ticket => {
               return (
                 <Link to={`/tickets/${ticket.id}`} key={ticket.id}>

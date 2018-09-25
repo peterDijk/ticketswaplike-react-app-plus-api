@@ -49,7 +49,7 @@ function TicketForm(props) {
             </Grid>              
           
             <Grid item>
-              <Button type="submit">Create advertisement</Button>
+              <Button type="submit">Add ticket</Button>
             </Grid>
           </Grid>
         </form>

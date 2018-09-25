@@ -9,11 +9,12 @@ import Typography from '@material-ui/core/Typography'
 // import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import FraudRiskDisplay from './FraudRiskDisplay'
+import ListPagination from './ListPagination'
 
 import {Link} from 'react-router-dom'
 
 function TicketDetails({ticket}) {
-
+  const {comments} = ticket
   return (
     <Grid container direction="column" justify="center" spacing={24}>
       <Grid item>
@@ -36,7 +37,29 @@ function TicketDetails({ticket}) {
           </Grid>
         </Paper>
       </Grid>
+      <Grid item>
+        {ticket.comments && ticket.comments.list.length === 0 && <Typography>no comments yet...</Typography>}
+        {ticket.comments &&  displayComments(comments.list, comments.count, comments.next, comments.previous)}
+      </Grid>
     </Grid>
+  )
+}
+
+function displayComments(commentsList, count, next, previous) {
+  return (
+    <div>
+      <ListPagination count={count} next={next} previous={previous}/>
+      <Typography variant="subheading">Comments:</Typography>
+      {commentsList.map(comment => {
+        return (
+          <div>
+            <Typography variant="caption">by {comment.user.firstName} {comment.user.lastName} on {formatDateTime(comment.dateCreated)}</Typography>
+            <Typography>{comment.comment}</Typography>
+            <Divider style={{marginBottom: 16}}/>
+          </div>
+        )
+      })}
+    </div>
   )
 }
 
@@ -46,12 +69,14 @@ function formatDateTime(date) {
   let day = '' + d.getDate()
   let year = d.getFullYear()
   let hours = d.getHours()
-  // let minutes = d.getMinutes()
+  let minutes = '' + d.getMinutes()
+
+  if (minutes.length < 2) minutes = '0' + minutes
 
   if (month.length < 2) month = '0' + month
   if (day.length < 2) day = '0' + day
 
-  return `${year}-${month}-${day} ${hours}h`
+  return `${year}-${month}-${day} ${hours}:${minutes}`
 }
 
 const styles = theme => ({
