@@ -7,19 +7,20 @@ import {withRouter} from 'react-router'
 import {userId} from '../../jwt'
 import {connect} from 'react-redux'
 import AccountIcon from '@material-ui/icons/AccountBox'
-import {getUsers} from '../../actions/users'
+import {getUser} from '../../actions/users'
+import {Link} from 'react-router-dom'
 
 class TopBar extends React.PureComponent {
   componentDidMount() {
     if (this.props.authenticated) {
-      if (this.props.users === null) this.props.getUsers()
+      if (this.props.users === null) this.props.getUser(userId(this.props.currentUser.jwt))
     }
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.authenticated !== this.props.authenticated) {
       if (this.props.authenticated) {
-        if (this.props.users === null) this.props.getUsers()
+        if (this.props.users === null) this.props.getUser(userId(this.props.currentUser.jwt))
       }
     }
   }
@@ -34,23 +35,23 @@ class TopBar extends React.PureComponent {
           </Typography>
           {
             user &&
-            <Button color="inherit"> <AccountIcon />{ user.firstName }</Button> //
+            <Button color="inherit"> <AccountIcon />{ user.firstName } {user.lastName}</Button> //
           }
 
           {
-            !this.props.authenticated > 0 &&
-            <Button color="inherit" onClick={() => history.push('/login')}>Login</Button>
+            !this.props.authenticated &&
+            <Button color="inherit"><Link to="login">Login</Link></Button>
           }
           {
-            location.pathname.indexOf('login') > 0 &&
-            <Button color="inherit" onClick={() => history.push('/signup')}>Sign up</Button>
+            !this.props.authenticated &&
+            <Button color="inherit"><Link to="/signup">Sign up</Link></Button>
           }
           {
-            <Button color="inherit" onClick={() => history.push('/events')}>All Events</Button>
+            <Button color="inherit"><Link to="/events">All Events</Link></Button>
           }
           {
             this.props.authenticated &&
-            <Button color="inherit" onClick={() => history.push('/logout')}>Log out</Button>
+            <Button color="inherit"><Link to="/logout">Log out</Link></Button>
           }
         </Toolbar>
       </AppBar>
@@ -60,13 +61,14 @@ class TopBar extends React.PureComponent {
 
 const mapStateToProps = state => ({
   authenticated: state.currentUser !== null,
+  currentUser: state.currentUser,
   users: state.users === null ? null : state.users,
   user: state.currentUser && state.users &&
     state.users[userId(state.currentUser.jwt)]
 })
 
 const mapDispatchToProps = {
-  getUsers
+  getUser
 }
 
 export default withRouter(

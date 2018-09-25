@@ -6,7 +6,7 @@ import {Redirect} from 'react-router-dom'
 
 class SignupPage extends PureComponent {
 	handleSubmit = (data) => {
-		this.props.postSignup(data.email, data.password)
+		this.props.postSignup(data.firstName, data.lastName, data.email, data.password)
 	}
 
 	render() {
@@ -20,7 +20,13 @@ class SignupPage extends PureComponent {
 
 				<SignupForm onSubmit={this.handleSubmit} />
 
-				<p style={{color:'red'}}>{ this.props.signup.error }</p>
+				<p style={{color:'red'}}>{ this.props.signup.error && this.props.signup.error.message}</p>
+				{this.props.signup.error && 
+				this.props.signup.error.errors.map(error => {
+					return (
+						Object.values(error.constraints).map(value => <p style={{color:'red'}}>{value}</p>)
+					)
+				})}
 			</div>
 		)
 	}

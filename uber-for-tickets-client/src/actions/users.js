@@ -42,6 +42,11 @@ const updateUsers = (users) => ({
   payload: users
 })
 
+const updateUser = (user) => ({
+  type: UPDATE_USER,
+  payload: user
+})
+
 export const login = (email, password) => (dispatch) =>
 	request
 		.post(`${apiUrl}/logins`)
@@ -60,24 +65,38 @@ export const login = (email, password) => (dispatch) =>
     	}
     })
 
-export const signup = (email, password) => (dispatch) =>
+export const signup = (firstName, lastName, email, password) => (dispatch) =>
 	request
 		.post(`${apiUrl}/users`)
-		.send({ firstName: email, lastName: email, email, password })
+		.send({ firstName, lastName, email, password })
 		.then(result => {
 			dispatch(userSignupSuccess())
 		})
 		.catch(err => {
 			if (err.status === 400) {
         
-				dispatch(userSignupFailed(err.response.body.message))
+				dispatch(userSignupFailed({message: err.response.body.message, errors: err.response.body.errors}))
 			}
 			else {
 				console.error(err)
 			}
 		})
 
-export const getUsers = () => (dispatch, getState) => {
+// export const getUsers = () => (dispatch, getState) => {
+//   const state = getState()
+//   if (!state.currentUser) return null
+//   const jwt = state.currentUser.jwt
+
+//   if (isExpired(jwt)) return dispatch(logout())
+
+//   request
+//     .get(`${apiUrl}/users`)
+//     .set('Authorization', `Bearer ${jwt}`)
+//     .then(result => dispatch(updateUsers(result.body)))
+//     .catch(err => console.error(err))
+// }
+
+export const getUser = (id) => (dispatch, getState) => {
   const state = getState()
   if (!state.currentUser) return null
   const jwt = state.currentUser.jwt
@@ -85,8 +104,8 @@ export const getUsers = () => (dispatch, getState) => {
   if (isExpired(jwt)) return dispatch(logout())
 
   request
-    .get(`${apiUrl}/users`)
+    .get(`${apiUrl}/users/${id}`)
     .set('Authorization', `Bearer ${jwt}`)
-    .then(result => dispatch(updateUsers(result.body)))
+    .then(result => dispatch(updateUser(result.body)))
     .catch(err => console.error(err))
 }

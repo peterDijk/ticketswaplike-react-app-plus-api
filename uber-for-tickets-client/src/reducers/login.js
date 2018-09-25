@@ -1,4 +1,4 @@
-import {USER_LOGIN_FAILED} from '../actions/users'
+import {USER_LOGIN_FAILED,USER_LOGIN_SUCCESS} from '../actions/users'
 
 export default function (state = {}, {type, payload}) {
 	switch (type) {
@@ -6,6 +6,8 @@ export default function (state = {}, {type, payload}) {
 			return {
 				error: payload
 			}
+		case USER_LOGIN_SUCCESS:
+			return {}
 
 		default:
       return state
