@@ -28,6 +28,7 @@ function TicketDetails({ticket}) {
             <Grid item>
               <Typography variant="headline">Price: {ticket.price}</Typography>
               <Typography>Description: {ticket.desc}</Typography>
+              <Typography>Seller: {ticket.user.firstName} {ticket.user.lastName} ({ticket.user.email})</Typography>
             </Grid>
           </Grid>
         </Paper>
