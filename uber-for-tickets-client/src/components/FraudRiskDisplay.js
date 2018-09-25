@@ -10,7 +10,7 @@ export default class FraudRiskDisplay extends React.PureComponent {
   setRisk = async () => { 
     const risk =  await getFraudRisk(this.props.ticketId)
     this.setState({
-      fraudRisk: risk.data
+      fraudRisk: risk
     })
   }
 

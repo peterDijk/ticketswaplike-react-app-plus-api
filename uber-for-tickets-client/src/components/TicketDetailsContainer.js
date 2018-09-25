@@ -1,13 +1,13 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {loadTicket, getFraudRisk} from '../actions/selectTicket'
+import {loadTicket, loadComments} from '../actions/selectTicket'
 import TicketDetails from './TicketDetails'
 
 class TicketDetailsContainer extends React.PureComponent {
 
   componentDidMount() {
     this.props.loadTicket(this.props.match.params.ticketId)
-    // this.props.getFraudRisk(this.props.match.params.ticketId)
+    this.props.loadComments(this.props.match.params.ticketId)
   }
 
 
@@ -26,7 +26,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchtoProps = {
   loadTicket,
-  getFraudRisk
+  loadComments
 }
 
 export default connect(mapStateToProps, mapDispatchtoProps)(TicketDetailsContainer)
