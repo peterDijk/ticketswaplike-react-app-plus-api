@@ -2,6 +2,7 @@ import axios from 'axios'
 import {apiUrl} from '../constants'
 
 export const TICKET_LOADED = 'TICKET_LOADED'
+export const FRAUD_RISK_FETCHED = 'FRAUD_RISK_FETCHED'
 
 function ticketLoaded(ticket) {
   return {
@@ -21,4 +22,16 @@ export function loadTicket(ticketId) {
         console.log(error)
       }
   }
+}
+
+
+export async function getFraudRisk(ticketId) {
+      try {
+        const request = await axios(`${apiUrl}/tickets/${ticketId}/fraudrisks`)
+        return request
+      }
+      catch (error) {
+        console.log(error)
+      }
+  // }
 }

@@ -8,11 +8,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography'
 // import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
+import FraudRiskDisplay from './FraudRiskDisplay'
 
 import {Link} from 'react-router-dom'
 
 function TicketDetails({ticket}) {
-  console.log(ticket)
+
   return (
     <Grid container direction="column" justify="center" spacing={24}>
       <Grid item>
@@ -29,6 +30,8 @@ function TicketDetails({ticket}) {
               <Typography variant="headline">Price: {ticket.price}</Typography>
               <Typography>Description: {ticket.desc}</Typography>
               <Typography>Seller: {ticket.user.firstName} {ticket.user.lastName} ({ticket.user.email})</Typography>
+              {/* <Typography>Fraud Risk: {ticket.fraudRisk}</Typography> */}
+              <FraudRiskDisplay ticketId={ticket.id}/>
             </Grid>
           </Grid>
         </Paper>

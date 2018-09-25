@@ -5,9 +5,12 @@ export const calcFraudRisk = (ticket, numAuthorTickets, ticketsEvent) => {
 
   ticket.price = parseFloat(ticket.price)
 
-  const pricesExclCurrent = ticketsEvent.filter(ticketF => ticketF.id !== ticket.id).map(ticket => parseFloat(ticket.price))
+  // const pricesExclCurrent = ticketsEvent.filter(ticketF => ticketF.id !== ticket.id).map(ticket => parseFloat(ticket.price))
+  // results in array of prices, except the ticket price that we're calculating the risk for
 
-  const avgTicketPriceEvent = pricesExclCurrent.reduce((total, price) => total + price) / pricesExclCurrent.length
+  const prices = ticketsEvent.map(ticket => parseFloat(ticket.price))
+
+  const avgTicketPriceEvent = prices.reduce((total, price) => total + price) / prices.length
 
   if (ticket.price < avgTicketPriceEvent) {
     // if ticket is X% cheaper than average, add X% to the risk
@@ -25,7 +28,21 @@ export const calcFraudRisk = (ticket, numAuthorTickets, ticketsEvent) => {
      risk -= percMoreExpensive
   }
 
+  const dateAdded = new Date(ticket.dateCreated)
+  const addedHour = dateAdded.getHours()
+  console.log(`added hour: ${addedHour}`)
+  if (addedHour >= 9 && addedHour <= 17) {
+    // console.log('inside buisiness hours, risk before: ', risk)
+    risk -= 10
+  } else { 
+    // console.log('outside buisiness hours, risk before: ', risk)
+    risk += 10
+  }
 
+  // COMMENTS!!!!
+
+
+  if (risk < 5) risk = 5
   if (risk > 95) risk = 95
-  return risk
+  return risk.toFixed(0)
 }

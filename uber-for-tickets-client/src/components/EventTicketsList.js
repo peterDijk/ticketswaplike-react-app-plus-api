@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import ListPagination from './ListPagination'
 import TicketForm from './TicketForm'
+import FraudRiskDisplay from './FraudRiskDisplay'
 
 import {Link} from 'react-router-dom'
 
@@ -42,6 +43,7 @@ function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmit
                 <Link to={`/tickets/${ticket.id}`} key={ticket.id}>
                   <ListItem button>
                     <ListItemText primary={`${ticket.user.firstName} ${ticket.user.lastName} - \u20ac ${ticket.price} - ${ticket.desc}`} />
+                    <FraudRiskDisplay ticketId={ticket.id}/>
                   </ListItem>
                   <Divider />
                 </Link>
