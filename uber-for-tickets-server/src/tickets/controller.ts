@@ -3,7 +3,9 @@ import {pageLimitTickets} from '../constants'
 import {Ticket} from './entity'
 import {Event} from '../events/entity'
 import User from '../users/entity'
-// import { MoreThan} from 'typeorm'
+import {calcFraudRisk} from '../lib/fraudRisk'
+// import {Not, Equal} from 'typeorm'
+
 
 @JsonController()
 export default class TicketController {
@@ -66,8 +68,21 @@ export default class TicketController {
   async getOneTicket(
     @Param('ticketId') ticketId: number
   ) {
-    const ticket = await Ticket.findOne(ticketId, {relations: ['event']})
+    const ticket = await Ticket.findOne(ticketId, {relations: ['event', 'user']})
     if (!ticket) throw new BadRequestError(`Ticket does not exist`)
     return ticket
+  }
+
+  @Get('/tickets/:ticketId/fraudrisks')
+  async getFraudRisk(
+    @Param('ticketId') ticketId: number
+  ) {
+    const ticket = await Ticket.findOne(ticketId, {relations: ['event', 'user']})
+    if (!ticket) throw new BadRequestError(`Ticket does not exist`)
+    const numAuthorTickets = await Ticket.count({user: ticket.user})
+
+    const ticketsEvent = await Ticket.find({event: ticket.event})
+    // comments
+    return calcFraudRisk(ticket, numAuthorTickets, ticketsEvent)
   }
 }
