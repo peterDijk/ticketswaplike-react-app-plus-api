@@ -6,13 +6,14 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography'
-// import Button from '@material-ui/core/Button'
+import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import ListPagination from './ListPagination'
+import TicketForm from './TicketForm'
 
 import {Link} from 'react-router-dom'
 
-function EventTicketsList({tickets}) {
+function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmitFn, addMode, values}) {
   const {count, next, previous, list, event} = tickets
   return (
     <div>
@@ -25,17 +26,22 @@ function EventTicketsList({tickets}) {
             <img src={event.imageUrl || `http://thechurchontheway.org/wp-content/uploads/2016/05/placeholder1.png`} width={400} alt=""/>
             <Typography>starts: {formatDateTime(event.startDate)}</Typography>
             <Typography>ends: {formatDateTime(event.endDate)}</Typography>
-
+            {authenticated === true && <Button onClick={onAddFn}>Add ticket</Button>}
           </Paper>
         </Grid>
         <Grid item>
           <ListPagination count={count} next={next} previous={previous}/>
+
+          
+          {(addMode === true && <TicketForm onChangeFn={onChangeFn} onSubmitFn={onSubmitFn} values={values}/>)}
+
+
           <List component="nav">
             {list.map(ticket => {
               return (
                 <Link to={`/tickets/${ticket.id}`} key={ticket.id}>
                   <ListItem button>
-                    <ListItemText primary={`authorName - \u20ac ${ticket.price} - ${ticket.desc}`} />
+                    <ListItemText primary={`${ticket.user.firstName} ${ticket.user.lastName} - \u20ac ${ticket.price} - ${ticket.desc}`} />
                   </ListItem>
                   <Divider />
                 </Link>

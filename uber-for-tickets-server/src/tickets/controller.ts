@@ -1,19 +1,22 @@
-import {JsonController, Get, Post, HttpCode, BodyParam, Param, BadRequestError, QueryParam} from 'routing-controllers'
+import {JsonController, Get, Post, HttpCode, BodyParam, Param, BadRequestError, QueryParam, Authorized, CurrentUser} from 'routing-controllers'
 import {pageLimitTickets} from '../constants'
 import {Ticket} from './entity'
 import {Event} from '../events/entity'
+import User from '../users/entity'
 // import { MoreThan} from 'typeorm'
 
 @JsonController()
 export default class TicketController {
 
+  @Authorized()
   @Post('/events/:eventId/tickets')
   @HttpCode(201)
   async createTicket(
     @BodyParam("price") price: number,
     @BodyParam("desc") desc: string,
     @BodyParam("imageUrl") imageUrl: string,
-    @Param('eventId') eventId: number
+    @Param('eventId') eventId: number,
+    @CurrentUser() user: User
   ) {
     const event = await Event.findOne(eventId)
     if (!event) throw new BadRequestError(`Event does not exist`)
@@ -21,7 +24,8 @@ export default class TicketController {
       event,
       price,
       desc,
-      imageUrl
+      imageUrl, 
+      user
     })
     return ticket.save()
   }
@@ -44,7 +48,7 @@ export default class TicketController {
     if (!orderBy) orderBy = 'dateCreated'
     if (!direction) direction = 'DESC'
 
-    const tickets = await Ticket.find({where: {event}, order: { [orderBy]: direction }, skip, take})
+    const tickets = await Ticket.find({where: {event}, order: { [orderBy]: direction }, skip, take, relations: ['user']})
 
     const totalPages = count / take
     let next

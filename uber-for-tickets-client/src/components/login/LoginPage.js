@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {login} from '../../actions/users'
 import LoginForm from './LoginForm'
 import {Redirect} from 'react-router-dom'
+import {withRouter} from 'react-router'
 
 class LoginPage extends PureComponent {
 	handleSubmit = (data) => {
@@ -10,9 +11,14 @@ class LoginPage extends PureComponent {
 	}
 
 	render() {
-		if (this.props.currentUser) return (
-			<Redirect to="/" />
-		)
+		const {location, history} = this.props
+		if (this.props.currentUser) {
+				return (
+				<Redirect to="/" />
+			)
+			// console.log(history)
+			// history.goBack()
+		}
 
 		return (
 			<div>
@@ -34,4 +40,6 @@ const mapStateToProps = function (state) {
 	}
 }
 
-export default connect(mapStateToProps, {login})(LoginPage)
+export default withRouter(
+	connect(mapStateToProps, {login})(LoginPage)
+)

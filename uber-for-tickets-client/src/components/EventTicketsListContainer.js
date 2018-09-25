@@ -5,9 +5,44 @@ import {userId} from '../jwt'
 import EventTicketsList from './EventTicketsList'
 
 
-import {loadTickets} from '../actions/tickets'
+import {loadTickets, addTicket} from '../actions/tickets'
 
 class EventsListContainer extends React.PureComponent {
+  state = {
+    addMode: false,
+    editMode: false
+  }
+
+  onAdd = () => {
+    // intialize add mode:
+    this.setState({
+      ...this.state,
+      addMode: true,
+      formValues: {
+        desc: '',
+        price: '',
+        imageUrl: ''
+      }
+    })
+  }
+
+  onChange = (event) => {
+    // update the formValues property with the new data from the input field
+    this.setState({
+      formValues: {
+        ...this.state.formValues,
+        [event.target.name]: event.target.value
+      }
+    })
+  }
+ 
+  onSubmit = (event) => {
+    event.preventDefault()
+    this.setState({
+      addMode: false
+    })
+    this.props.addTicket(this.props.tickets.event.id, this.state.formValues)
+  }  
 
   componentDidMount() {
     this.loadPagTickets()
@@ -30,9 +65,17 @@ class EventsListContainer extends React.PureComponent {
 
   render() {
     const {tickets} = this.props
-    if (tickets.length === 0) return 'Loading tickets...'
+    if (!tickets.list) return 'Loading tickets...'
     return (
-      <EventTicketsList tickets={tickets}/> 
+      <EventTicketsList 
+        tickets={tickets} 
+        authenticated={this.props.authenticated}
+        onAddFn={this.onAdd}
+        onChangeFn={this.onChange}
+        onSubmitFn={this.onSubmit}
+        addMode={this.state.addMode}
+        values={this.state.formValues}
+        /> 
     )
   }
 
@@ -40,11 +83,13 @@ class EventsListContainer extends React.PureComponent {
 
 
 const mapStateToProps = (state) => ({
+  authenticated: state.currentUser !== null,
   tickets: state.tickets
 })
 
 const mapDispatchtoProps = {
-  loadTickets
+  loadTickets,
+  addTicket
 }
 
 export default connect(mapStateToProps, mapDispatchtoProps)(EventsListContainer)

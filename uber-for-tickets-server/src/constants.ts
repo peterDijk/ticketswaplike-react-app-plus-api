@@ -1,2 +1,2 @@
 export const pageLimitEvents = 9
-export const pageLimitTickets = 2
+export const pageLimitTickets = 10
