@@ -1,5 +1,6 @@
 import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, Timestamp, ManyToOne} from 'typeorm'
 import {Event} from '../events/entity'
+import User from '../users/entity'
 
 // import User from '../users/entity'
 
@@ -20,6 +21,9 @@ export class Ticket extends BaseEntity {
 
   @ManyToOne(_ => Event, event => event.tickets)
   event: Event
+
+  @ManyToOne(_ => User, user => user.tickets)
+  user: User
 
   @Column('timestamptz', {nullable: false, default: () => `now()`})
   dateCreated: Timestamp

@@ -1,8 +1,8 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
 import { Exclude } from 'class-transformer';
 import { MinLength, IsString, IsEmail } from 'class-validator';
 import * as bcrypt from 'bcrypt'
-// import { Event } from '../events/entity';
+import { Ticket } from '../tickets/entity';
 
 @Entity()
 export default class User extends BaseEntity {
@@ -30,8 +30,8 @@ export default class User extends BaseEntity {
   @Exclude({ toPlainOnly: true })
   password: string
 
-  // @OneToMany(_ => Event, event => event.user)
-  // events: Event[]
+  @OneToMany(_ => Ticket, ticket => ticket.user)
+  tickets: Ticket[]
 
   async setPassword(rawPassword: string) {
     const hash = await bcrypt.hash(rawPassword, 10)
