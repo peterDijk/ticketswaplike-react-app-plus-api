@@ -5,11 +5,15 @@ import { verify } from './jwt'
 import * as Koa from 'koa'
 import {Server} from 'http'
 import * as IO from 'socket.io'
-// import * as socketIoJwtAuth from 'socketio-jwt-auth'
-// import {secret} from './jwt'
+import * as socketIoJwtAuth from 'socketio-jwt-auth'
+import {secret} from './jwt'
 
 import EventController from './events/controller'
 import TicketController from './tickets/controller'
+import UserController from './users/controller'
+import LoginController from './logins/controller'
+import User from './users/entity'
+
 
 const app = new Koa()
 const server = new Server(app.callback())
@@ -20,7 +24,9 @@ useKoaServer(app, {
   cors: true,
   controllers: [
     EventController,
-    TicketController
+    TicketController,
+    UserController,
+    LoginController
   ],
   authorizationChecker: (action: Action) => {
     const header: string = action.request.headers.authorization
@@ -37,34 +43,34 @@ useKoaServer(app, {
 
     return false
   },
-  // currentUserChecker: async (action: Action) => {
-  //   const header: string = action.request.headers.authorization
-  //   if (header && header.startsWith('Bearer ')) {
-  //     const [ , token ] = header.split(' ')
+  currentUserChecker: async (action: Action) => {
+    const header: string = action.request.headers.authorization
+    if (header && header.startsWith('Bearer ')) {
+      const [ , token ] = header.split(' ')
       
-  //     if (token) {
-  //       const {id} = verify(token)
-  //       return User.findOneById(id)
-  //     }
-  //   }
-  //   return undefined
-  // }
+      if (token) {
+        const {id} = verify(token)
+        return User.findOne(id)
+      }
+    }
+    return undefined
+  }
 })
 
-// io.use(socketIoJwtAuth.authenticate({ secret }, async (payload, done) => {
-//   const user = await User.findOneById(payload.id)
-//   if (user) done(null, user)
-//   else done(null, false, `Invalid JWT user ID`)
-// }))
+io.use(socketIoJwtAuth.authenticate({ secret }, async (payload, done) => {
+  const user = await User.findOne(payload.id)
+  if (user) done(null, user)
+  else done(null, false, `Invalid JWT user ID`)
+}))
 
-// io.on('connect', socket => {
-//   const name = socket.request.user.firstName
-//   console.log(`User ${name} just connected`)
+io.on('connect', socket => {
+  const name = socket.request.user.firstName
+  console.log(`User ${name} just connected`)
 
-//   socket.on('disconnect', () => {
-//     console.log(`User ${name} just disconnected`)
-//   })
-// })
+  socket.on('disconnect', () => {
+    console.log(`User ${name} just disconnected`)
+  })
+})
 
 setupDb()
   .then(_ => {

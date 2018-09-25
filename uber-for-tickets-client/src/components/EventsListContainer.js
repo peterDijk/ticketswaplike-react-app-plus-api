@@ -1,6 +1,7 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
 import queryString from 'query-string'
+import {getUsers} from '../actions/users'
 import {userId} from '../jwt'
 import EventsList from './EventsList'
 
@@ -11,6 +12,7 @@ class EventsListContainer extends React.PureComponent {
 
   componentDidMount() {
     this.loadPagEvents()
+
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -37,11 +39,14 @@ class EventsListContainer extends React.PureComponent {
 }
 
 const mapStateToProps = (state) => ({
+  authenticated: state.currentUser !== null,
+  users: state.users === null ? null : state.users,
   events: state.events
 })
 
 const mapDispatchtoProps = {
-  loadEvents
+  loadEvents,
+  getUsers
 }
 
 export default connect(mapStateToProps, mapDispatchtoProps)(EventsListContainer)

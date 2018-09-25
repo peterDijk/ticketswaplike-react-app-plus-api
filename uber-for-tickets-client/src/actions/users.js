@@ -46,10 +46,14 @@ export const login = (email, password) => (dispatch) =>
 	request
 		.post(`${apiUrl}/logins`)
     .send({email, password})
-    .then(result => dispatch(userLoginSuccess(result.body)))
+    .then(result => {
+      dispatch(userLoginSuccess(result.body))
+      // dispatch(getUsers())
+    })
     .catch(err => {
     	if (err.status === 400) {
-    		dispatch(userLoginFailed(err.response.body.message))
+        dispatch(userLoginFailed(err.response.body.message))
+        
     	}
     	else {
     		console.error(err)
