@@ -7,6 +7,7 @@ import {logout} from './users'
 export const TICKETS_FETCHED = 'TICKETS_FETCHED'
 export const TICKET_ADD_SUCCESS = 'TICKET_ADD_SUCCESS'
 
+
 function ticketsFetched({tickets, count, next, previous, event}) {
   return {
     type: TICKETS_FETCHED,
@@ -20,8 +21,6 @@ function ticketAddSuccess(ticket) {
     payload: ticket
   }
 }
-
-
 
 
 export function loadTickets(eventId, pagination, orderBy, direction) {
@@ -51,3 +50,4 @@ export const addTicket = (eventId, formValues) => (dispatch, getState) => {
     .then(result => dispatch(ticketAddSuccess(result.body)))
     .catch(err => console.error(err))
 }
+

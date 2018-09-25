@@ -38,7 +38,7 @@ export const calcFraudRisk = (ticket, numAuthorTickets, ticketsEvent) => {
     risk += 10
   }
 
-  // COMMENTS!!!!
+  if (ticket.comments.length > 3) risk += 5
 
 
   if (risk < 5) risk = 5

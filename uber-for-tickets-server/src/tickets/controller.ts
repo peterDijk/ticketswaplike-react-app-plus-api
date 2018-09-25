@@ -77,7 +77,7 @@ export default class TicketController {
   async getFraudRisk(
     @Param('ticketId') ticketId: number
   ) {
-    const ticket = await Ticket.findOne(ticketId, {relations: ['event', 'user']})
+    const ticket = await Ticket.findOne(ticketId, {relations: ['event', 'user', 'comments']})
     if (!ticket) throw new BadRequestError(`Ticket does not exist`)
     const numAuthorTickets = await Ticket.count({user: ticket.user})
 

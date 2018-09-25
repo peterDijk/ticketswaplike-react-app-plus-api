@@ -6,14 +6,15 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography'
-// import Button from '@material-ui/core/Button'
+import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import FraudRiskDisplay from './FraudRiskDisplay'
 import ListPagination from './ListPagination'
+import CommentForm from './CommentForm'
 
 import {Link} from 'react-router-dom'
 
-function TicketDetails({ticket}) {
+function TicketDetails({ticket, authenticated, onAddFn, onChangeFn, onSubmitFn, addMode, values}) {
   const {comments} = ticket
   return (
     <Grid container direction="column" justify="center" spacing={24}>
@@ -31,15 +32,19 @@ function TicketDetails({ticket}) {
               <Typography variant="headline">Price: {ticket.price}</Typography>
               <Typography>Description: {ticket.desc}</Typography>
               <Typography>Seller: {ticket.user.firstName} {ticket.user.lastName} ({ticket.user.email})</Typography>
-              {/* <Typography>Fraud Risk: {ticket.fraudRisk}</Typography> */}
               <FraudRiskDisplay ticketId={ticket.id}/>
             </Grid>
           </Grid>
         </Paper>
       </Grid>
       <Grid item>
+        {authenticated === true && <Button onClick={onAddFn}>Add comment</Button>}
+        {(addMode === true && <CommentForm onChangeFn={onChangeFn} onSubmitFn={onSubmitFn} values={values}/>)}
+      </Grid>
+      <Grid item>
         {ticket.comments && ticket.comments.list.length === 0 && <Typography>no comments yet...</Typography>}
-        {ticket.comments &&  displayComments(comments.list, comments.count, comments.next, comments.previous)}
+        
+        {ticket.comments && ticket.comments.list.length > 0 && displayComments(comments.list, comments.count, comments.next, comments.previous)}
       </Grid>
     </Grid>
   )

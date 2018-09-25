@@ -1,9 +1,13 @@
 import axios from 'axios'
+import * as request from 'superagent'
 import {apiUrl} from '../constants'
+import {isExpired} from '../jwt'
+import {logout} from './users'
 
 export const TICKET_LOADED = 'TICKET_LOADED'
 export const FRAUD_RISK_FETCHED = 'FRAUD_RISK_FETCHED'
 export const COMMENTS_LOADED = 'COMMENTS_LOADED'
+export const COMMENT_ADD_SUCCESS = 'COMMENT_ADD_SUCCESS'
 
 function ticketLoaded(ticket) {
   return {
@@ -31,6 +35,14 @@ export function loadTicket(ticketId) {
   }
 }
 
+
+function commentAddSuccess(comment) {
+  return {
+    type: COMMENT_ADD_SUCCESS,
+    payload: comment
+  }
+}
+
 export async function getFraudRisk(ticketId) {
       try {
         const request = await axios(`${apiUrl}/tickets/${ticketId}/fraudrisks`)
@@ -51,4 +63,20 @@ export function loadComments(ticketId, pagination, orderBy, direction) {
       console.log(error)
     }
   } 
+}
+
+export const addComment = (ticketId, formValues) => (dispatch, getState) => {
+  const {comment} = formValues
+  const state = getState()
+  if (!state.currentUser) return null
+  const jwt = state.currentUser.jwt
+
+  if (isExpired(jwt)) return dispatch(logout())
+
+  request
+    .post(`${apiUrl}/tickets/${ticketId}/comments`)
+    .set('Authorization', `Bearer ${jwt}`)
+    .send({comment})
+    .then(result => dispatch(commentAddSuccess(result.body)))
+    .catch(err => console.error(err))
 }
