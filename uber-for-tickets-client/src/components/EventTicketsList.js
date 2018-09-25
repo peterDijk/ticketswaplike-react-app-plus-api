@@ -44,7 +44,7 @@ function EventTicketsList({tickets, authenticated, userId, onAddFn, onChangeFn, 
                 <Link to={`/tickets/${ticket.id}`} key={ticket.id}>
                   <ListItem button>
                     <ListItemText primary={`${ticket.user.firstName} ${ticket.user.lastName} - \u20ac ${ticket.price} - ${ticket.desc}`} />
-                    {userId && userId === ticket.user.id && <Button>Delete</Button>}
+                    {userId && userId === ticket.user.id && <Button>Edit</Button>}
                     <FraudRiskDisplay ticketId={ticket.id}/>
                   </ListItem>
                   <Divider />
