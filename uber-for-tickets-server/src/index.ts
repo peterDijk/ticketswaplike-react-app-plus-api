@@ -10,6 +10,7 @@ import {secret} from './jwt'
 
 import EventController from './events/controller'
 import TicketController from './tickets/controller'
+import CommentController from './comments/controller'
 import UserController from './users/controller'
 import LoginController from './logins/controller'
 import User from './users/entity'
@@ -25,6 +26,7 @@ useKoaServer(app, {
   controllers: [
     EventController,
     TicketController,
+    CommentController,
     UserController,
     LoginController
   ],
