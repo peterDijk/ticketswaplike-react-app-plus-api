@@ -2,6 +2,7 @@ import * as React from 'react'
 import {connect} from 'react-redux'
 import queryString from 'query-string'
 import EventTicketsList from './EventTicketsList'
+import {userId} from '../jwt'
 
 
 import {loadTickets, addTicket} from '../actions/tickets'
@@ -74,6 +75,7 @@ class EventsListContainer extends React.PureComponent {
         onSubmitFn={this.onSubmit}
         addMode={this.state.addMode}
         values={this.state.formValues}
+        userId={this.props.userId}
         /> 
     )
   }
@@ -83,6 +85,7 @@ class EventsListContainer extends React.PureComponent {
 
 const mapStateToProps = (state) => ({
   authenticated: state.currentUser !== null,
+  userId: state.currentUser && userId(state.currentUser.jwt),
   tickets: state.tickets
 })
 
