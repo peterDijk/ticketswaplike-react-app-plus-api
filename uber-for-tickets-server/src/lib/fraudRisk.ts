@@ -30,7 +30,6 @@ export const calcFraudRisk = (ticket, numAuthorTickets, ticketsEvent) => {
 
   const dateAdded = new Date(ticket.dateCreated)
   const addedHour = dateAdded.getHours()
-  console.log(`added hour: ${addedHour}`)
   if (addedHour >= 9 && addedHour <= 17) {
     // console.log('inside buisiness hours, risk before: ', risk)
     risk -= 10
