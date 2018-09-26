@@ -1,4 +1,4 @@
-import {JsonController, Get, Post, Put, HttpCode, Body, BodyParam, Param, NotFoundError, QueryParam, Authorized, CurrentUser, BadRequestError, Delete} from 'routing-controllers'
+import {JsonController, Get, Post, Put, HttpCode, BodyParam, Param, NotFoundError, QueryParam, Authorized, CurrentUser, BadRequestError, Delete} from 'routing-controllers'
 import {pageLimitEvents} from '../constants'
 import {Event} from './entity'
 import User from '../users/entity'
@@ -68,7 +68,11 @@ export default class EventController {
   async updateEvent(
     @Param('id') id: number,
     @CurrentUser() currentUser: User,
-    @Body() update: Partial<Event>
+    @BodyParam("name") name: string,
+    @BodyParam("desc") desc: string,
+    @BodyParam("imageUrl") imageUrl: string,
+    @BodyParam("startDate") startDate: Date,
+    @BodyParam("endDate") endDate: Date,
   ) {
     const event = await Event.findOne(id)
     if (!event) throw new NotFoundError('Cannot find event')
@@ -77,7 +81,7 @@ export default class EventController {
       throw new BadRequestError(`Only admin can edit event`)
     } 
     if (currentUser.isAdmin === true) {
-      return Event.merge(event, update).save()
+      return Event.merge(event, {name, desc, imageUrl, startDate, endDate}).save()
     }    
   }
 

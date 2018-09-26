@@ -19,10 +19,10 @@ export class Event extends BaseEntity {
   @Column('text', {nullable: true})
   imageUrl: string
 
-  @Column('timestamptz', {nullable: true})
+  @Column('timestamptz', {nullable: false})
   startDate: Timestamp
 
-  @Column('timestamptz', {nullable: true})
+  @Column('timestamptz', {nullable: false})
   endDate: Timestamp
 
   @Column('timestamptz', {nullable: false, default: () => `now()`})
