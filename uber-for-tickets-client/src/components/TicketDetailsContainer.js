@@ -2,7 +2,8 @@ import * as React from 'react'
 import {connect} from 'react-redux'
 import queryString from 'query-string'
 import {userId} from '../jwt'
-import {loadTicket, loadComments, addComment, editTicket} from '../actions/selectTicket'
+import {isAdmin} from '../jwt'
+import {loadTicket, loadComments, addComment, editTicket, deleteComment} from '../actions/selectTicket'
 import TicketDetails from './TicketDetails'
 
 class TicketDetailsContainer extends React.PureComponent {
@@ -91,6 +92,7 @@ class TicketDetailsContainer extends React.PureComponent {
         ticket={ticket} 
         authenticated={this.props.authenticated}
         userId={this.props.userId}
+        isAdmin={this.props.isAdmin}
         onAddFn={this.onAdd}
         onChangeFn={this.onChange}
         onSubmitFn={this.onSubmit}
@@ -100,6 +102,7 @@ class TicketDetailsContainer extends React.PureComponent {
         editTicketValues={this.state.formValues}
         onEditTicketFn={this.onEditTicket}
         onSubmitTicketFn={this.onSubmitTicket}
+        deleteCommentFn={this.props.deleteComment}
       />
     )
   }
@@ -108,6 +111,7 @@ class TicketDetailsContainer extends React.PureComponent {
 const mapStateToProps = (state) => ({
   authenticated: state.currentUser !== null,
   userId: state.currentUser && userId(state.currentUser.jwt),
+  isAdmin: state.currentUser && isAdmin(state.currentUser.jwt),
   ticket: state.selectedTicket
 })
 
@@ -115,7 +119,8 @@ const mapDispatchtoProps = {
   loadTicket,
   loadComments,
   addComment,
-  editTicket
+  editTicket,
+  deleteComment
 }
 
 export default connect(mapStateToProps, mapDispatchtoProps)(TicketDetailsContainer)

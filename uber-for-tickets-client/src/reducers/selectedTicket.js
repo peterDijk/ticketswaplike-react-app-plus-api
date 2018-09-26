@@ -2,7 +2,8 @@ import {
   TICKET_LOADED,
   COMMENTS_LOADED,
   COMMENT_ADD_SUCCESS,
-  EDIT_TICKET_SUCCESS
+  EDIT_TICKET_SUCCESS,
+  DELETE_TICKET_SUCCESS
 } from '../actions/selectTicket'
 
 export default (state = {}, action = {}) => {
@@ -26,6 +27,17 @@ export default (state = {}, action = {}) => {
         price: action.payload.price,
         desc: action.payload.desc,
         imageUrl: action.payload.imageUrl
+      }
+    case DELETE_TICKET_SUCCESS:
+      const newCommentsList = [...state.comments.list]
+      const commentsExclDeleted = newCommentsList.filter(comment => comment.id !== action.payload.id)
+      return {
+        ...state,
+        comments: {
+          ...state.comments,
+          list: commentsExclDeleted,
+          count: state.comments.count - 1
+        }
       }
     default: 
       return state

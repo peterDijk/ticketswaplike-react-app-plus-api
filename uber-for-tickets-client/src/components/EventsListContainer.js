@@ -1,7 +1,8 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
 import queryString from 'query-string'
-import {userId} from '../jwt'
+// import {userId} from '../jwt'
+import {isAdmin} from '../jwt'
 import EventsList from './EventsList'
 
 
@@ -86,6 +87,7 @@ class EventsListContainer extends React.PureComponent {
 const mapStateToProps = (state) => ({
   authenticated: state.currentUser !== null,
   // userId: state.currentUser && userId(state.currentUser.jwt),
+  isAdmin: state.currentUser && isAdmin(state.currentUser.jwt),
   events: state.events
 })
 

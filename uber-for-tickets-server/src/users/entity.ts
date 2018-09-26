@@ -32,6 +32,10 @@ export default class User extends BaseEntity {
   @Exclude({ toPlainOnly: true })
   password: string
 
+  @Column('boolean', {nullable: true, default: false})
+  isAdmin: boolean
+
+
   @OneToMany(_ => Ticket, ticket => ticket.user)
   tickets: Ticket[]
 

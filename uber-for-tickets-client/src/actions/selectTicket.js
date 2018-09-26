@@ -9,6 +9,7 @@ export const FRAUD_RISK_FETCHED = 'FRAUD_RISK_FETCHED'
 export const COMMENTS_LOADED = 'COMMENTS_LOADED'
 export const COMMENT_ADD_SUCCESS = 'COMMENT_ADD_SUCCESS'
 export const EDIT_TICKET_SUCCESS = 'EDIT_TICKET_SUCCESS'
+export const DELETE_TICKET_SUCCESS = 'DELETE_TICKET_SUCCESS'
 
 function ticketLoaded(ticket) {
   return {
@@ -51,6 +52,13 @@ function editTicketSuccess(ticket) {
   }
 }
 
+function commentDeleteSuccess(comment) {
+  return {
+    type: DELETE_TICKET_SUCCESS,
+    payload: comment
+  }
+}
+
 export async function getFraudRisk(ticketId) {
       try {
         const request = await axios(`${apiUrl}/tickets/${ticketId}/fraudrisks`)
@@ -86,6 +94,20 @@ export const addComment = (ticketId, formValues) => (dispatch, getState) => {
     .set('Authorization', `Bearer ${jwt}`)
     .send({comment})
     .then(result => dispatch(commentAddSuccess(result.body)))
+    .catch(err => console.error(err))
+}
+
+export const deleteComment = (commentId, ticketId) => (dispatch, getState) => {
+  const state = getState()
+  if (!state.currentUser) return null
+  const jwt = state.currentUser.jwt
+
+  if (isExpired(jwt)) return dispatch(logout())
+
+  request
+    .delete(`${apiUrl}/tickets/${ticketId}/comments/${commentId}`)
+    .set('Authorization', `Bearer ${jwt}`)
+    .then(result => dispatch(commentDeleteSuccess(result.body)))
     .catch(err => console.error(err))
 }
 

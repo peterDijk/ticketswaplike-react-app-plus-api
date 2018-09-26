@@ -5,5 +5,6 @@ const jwtData = jwt => {
 }
 
 export const userId = jwt => jwtData(jwt).id
+export const isAdmin = jwt => jwtData(jwt).isAdmin
 
 export const isExpired = jwt => jwtData(jwt).exp < (Date.now()/1000)

@@ -1,4 +1,4 @@
-import {JsonController, Get, Post, HttpCode, BodyParam, Param, BadRequestError, Authorized, CurrentUser, QueryParam} from 'routing-controllers'
+import {JsonController, Get, Post, HttpCode, BodyParam, Param, BadRequestError, Authorized, CurrentUser, QueryParam, Delete} from 'routing-controllers'
 import {pageLimitComments} from '../constants'
 import {Ticket} from '../tickets/entity'
 import Comment from '../comments/entity'
@@ -58,4 +58,25 @@ export default class CommentController {
 
     return {count, next, previous, comments, ticket}
   }
+
+  @Authorized()
+  @Delete('/tickets/:ticketId/comments/:commentId')
+  @HttpCode(202)
+  async deleteComment(
+    @Param('commentId') commentId: number,
+    @CurrentUser() user: User
+  ) {
+    const userResult = await User.findOne(user)
+    if (!userResult) throw new BadRequestError(`User does not exist`)
+    if (userResult.isAdmin === false) {
+      throw new BadRequestError(`Only admins are allowed to delete comments`)
+    }
+
+    const comment = await Comment.findOne(commentId)
+    if (!comment) throw new BadRequestError(`Comment does not exist`)
+    comment.remove()
+
+    return comment
+  }
+
 }

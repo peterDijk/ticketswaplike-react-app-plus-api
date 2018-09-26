@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import {withRouter} from 'react-router'
 import {userId} from '../../jwt'
+import {isAdmin} from '../../jwt'
 import {connect} from 'react-redux'
 import AccountIcon from '@material-ui/icons/AccountBox'
 import {getUser} from '../../actions/users'
@@ -37,6 +38,9 @@ class TopBar extends React.PureComponent {
             user &&
             <Button color="inherit"> <AccountIcon />{ user.firstName } {user.lastName}</Button> //
           }
+          {
+            this.props.isAdmin && '(role: administrator)'
+          }
 
           {
             !this.props.authenticated &&
@@ -68,7 +72,8 @@ const mapStateToProps = state => ({
   currentUser: state.currentUser,
   users: state.users === null ? null : state.users,
   user: state.currentUser && state.users &&
-    state.users[userId(state.currentUser.jwt)]
+    state.users[userId(state.currentUser.jwt)],
+  isAdmin: state.currentUser && isAdmin(state.currentUser.jwt)
 })
 
 const mapDispatchToProps = {

@@ -15,7 +15,7 @@ import TicketForm from './TicketForm'
 
 import {Link} from 'react-router-dom'
 
-function TicketDetails({ticket, authenticated, userId, onAddFn, onChangeFn, onSubmitFn, addMode, values, editTicketMode, editTicketValues, onEditTicketFn, onSubmitTicketFn}) {
+function TicketDetails({ticket, authenticated, userId, isAdmin, onAddFn, onChangeFn, onSubmitFn, addMode, values, editTicketMode, editTicketValues, onEditTicketFn, onSubmitTicketFn, deleteCommentFn}) {
   const {comments} = ticket
   return (
     <Grid container direction="column" justify="center" spacing={24}>
@@ -55,13 +55,13 @@ function TicketDetails({ticket, authenticated, userId, onAddFn, onChangeFn, onSu
       <Grid item>
         {ticket.comments && ticket.comments.list.length === 0 && <Typography>no comments yet...</Typography>}
         
-        {ticket.comments && ticket.comments.list.length > 0 && displayComments(comments.list, comments.count, comments.next, comments.previous)}
+        {ticket.comments && ticket.comments.list.length > 0 && displayComments(comments.list, comments.count, comments.next, comments.previous, isAdmin, deleteCommentFn, ticket.id)}
       </Grid>
     </Grid>
   )
 }
 
-function displayComments(commentsList, count, next, previous) {
+function displayComments(commentsList, count, next, previous, isAdmin, deleteCommentFn, ticketId) {
   return (
     <div>
       <ListPagination count={count} next={next} previous={previous}/>
@@ -70,6 +70,7 @@ function displayComments(commentsList, count, next, previous) {
         return (
           <div key={comment.id}>
             <Typography variant="caption">by {comment.user.firstName} {comment.user.lastName} on {formatDateTime(comment.dateCreated)}</Typography>
+            {isAdmin && <Button onClick={() => deleteCommentFn(comment.id, ticketId)}>delete</Button>}
             <Typography>{comment.comment}</Typography>
             <Divider style={{marginBottom: 16}}/>
           </div>
