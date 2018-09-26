@@ -1,4 +1,4 @@
-import {JsonController, Get, Post, Put, HttpCode, Body, BodyParam, Param, NotFoundError, QueryParam, Authorized, CurrentUser} from 'routing-controllers'
+import {JsonController, Get, Post, Put, HttpCode, Body, BodyParam, Param, NotFoundError, QueryParam, Authorized, CurrentUser, BadRequestError, Delete} from 'routing-controllers'
 import {pageLimitEvents} from '../constants'
 import {Event} from './entity'
 import User from '../users/entity'
@@ -62,14 +62,42 @@ export default class EventController {
     return event
   }
 
+  @Authorized()
   @Put('/events/:id')
+  @HttpCode(200)
   async updateEvent(
     @Param('id') id: number,
+    @CurrentUser() currentUser: User,
     @Body() update: Partial<Event>
   ) {
     const event = await Event.findOne(id)
     if (!event) throw new NotFoundError('Cannot find event')
-    
-    return Event.merge(event, update).save()
+
+    if (currentUser.isAdmin === false) {
+      throw new BadRequestError(`Only admin can edit event`)
+    } 
+    if (currentUser.isAdmin === true) {
+      return Event.merge(event, update).save()
+    }    
   }
+
+  @Authorized()
+  @Delete('/events/:eventId')
+  @HttpCode(202)
+  async deleteTicket(
+    @Param('eventId') eventId: number,
+    @CurrentUser() user: User
+  ) {
+    const userResult = await User.findOne(user)
+    if (!userResult) throw new BadRequestError(`User does not exist`)
+    if (userResult.isAdmin === false) {
+      throw new BadRequestError(`Only admins are allowed to delete events`)
+    }
+
+    const event = await Event.findOne(eventId)
+    if (!event) throw new BadRequestError(`Event does not exist`)
+    event.remove()
+
+      return event
+    }
 }

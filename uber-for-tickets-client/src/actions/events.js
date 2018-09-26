@@ -6,6 +6,7 @@ import {logout} from './users'
 
 export const EVENTS_FETCHED = 'EVENTS_FETCHED'
 export const EVENT_ADD_SUCCESS = 'EVENT_ADD_SUCCESS'
+export const EVENT_EDIT_SUCCESS = 'EVENT_EDIT_SUCCESS'
 
 function eventsFetched({events, count, next, previous}) {
   return {
@@ -17,6 +18,13 @@ function eventsFetched({events, count, next, previous}) {
 function eventAddSuccess(event) {
   return {
     type: EVENT_ADD_SUCCESS,
+    payload: event
+  }
+}
+
+function eventEditSuccess(event) {
+  return {
+    type: EVENT_EDIT_SUCCESS,
     payload: event
   }
 }
@@ -47,5 +55,21 @@ export const addEvent = (formValues) => (dispatch, getState) => {
     .set('Authorization', `Bearer ${jwt}`)
     .send({name, desc, imageUrl, startDate, endDate})
     .then(result => dispatch(eventAddSuccess(result.body)))
+    .catch(err => console.error(err))
+}
+
+export const editEvent = (eventId, formValues) => (dispatch, getState) => {
+  const {name, desc, imageUrl, startDate, endDate} = formValues
+  const state = getState()
+  if (!state.currentUser) return null
+  const jwt = state.currentUser.jwt
+
+  if (isExpired(jwt)) return dispatch(logout())
+
+  request
+    .put(`${apiUrl}/events/${eventId}`)
+    .set('Authorization', `Bearer ${jwt}`)
+    .send({name, desc, imageUrl, startDate, endDate})
+    .then(result => dispatch(eventEditSuccess(result.body)))
     .catch(err => console.error(err))
 }

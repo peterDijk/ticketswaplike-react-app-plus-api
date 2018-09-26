@@ -6,7 +6,7 @@ import {isAdmin} from '../jwt'
 import EventsList from './EventsList'
 
 
-import {loadEvents, addEvent} from '../actions/events'
+import {loadEvents, addEvent, editEvent} from '../actions/events'
 
 class EventsListContainer extends React.PureComponent {
   state = {
@@ -29,6 +29,39 @@ class EventsListContainer extends React.PureComponent {
     })
   }
 
+  onEdit = (eventId) => {
+    const {events} = this.props
+    const event = events.list.find(event => event.id === eventId)
+    this.setState({
+      ...this.state,
+      editMode: true,
+      formValues: {
+        id: eventId,
+        name: event.name,
+        desc: event.desc,
+        imageUrl: event.imageUrl,
+        startDate: this.formatDateTimeForPicker(event.startDate),
+        endDate: this.formatDateTimeForPicker(event.endDate)
+      }
+    })
+  }
+
+  formatDateTimeForPicker(date) {
+    let d = new Date(date)
+    let month = '' + (d.getMonth() + 1)
+    let day = '' + d.getDate()
+    let year = d.getFullYear()
+    let hours = d.getHours()
+    let minutes = '' + d.getMinutes()
+  
+    if (minutes.length < 2) minutes = '0' + minutes
+  
+    if (month.length < 2) month = '0' + month
+    if (day.length < 2) day = '0' + day
+  
+    return `${year}-${month}-${day}T${hours}:${minutes}`
+  }
+
   onChange = (event) => {
     // update the formValues property with the new data from the input field
     this.setState({
@@ -46,6 +79,14 @@ class EventsListContainer extends React.PureComponent {
     })
     this.props.addEvent(this.state.formValues)
   }  
+ 
+  onSubmitEdit = (event) => {
+    event.preventDefault()
+    this.setState({
+      editMode: false
+    })
+    this.props.editEvent(this.state.formValues.id, this.state.formValues)
+  }    
 
 
   componentDidMount() {
@@ -79,6 +120,10 @@ class EventsListContainer extends React.PureComponent {
           onChangeFn={this.onChange}
           onSubmitFn={this.onSubmit}
           formValues={this.state.formValues}
+          isAdmin={this.props.isAdmin}
+          onEditFn={this.onEdit}
+          editMode={this.state.editMode}
+          onSubmitEditFn={this.onSubmitEdit}
         />
     )
   }
@@ -93,7 +138,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchtoProps = {
   loadEvents,
-  addEvent
+  addEvent,
+  editEvent
 }
 
 export default connect(mapStateToProps, mapDispatchtoProps)(EventsListContainer)

@@ -7,7 +7,7 @@ import {isAdmin} from '../jwt'
 
 import {loadTickets, addTicket, deleteTicket} from '../actions/tickets'
 
-class EventsListContainer extends React.PureComponent {
+class EventsTicketsListContainer extends React.PureComponent {
   state = {
     addMode: false,
     editMode: false
@@ -98,4 +98,4 @@ const mapDispatchtoProps = {
   deleteTicket
 }
 
-export default connect(mapStateToProps, mapDispatchtoProps)(EventsListContainer)
+export default connect(mapStateToProps, mapDispatchtoProps)(EventsTicketsListContainer)

@@ -5,6 +5,8 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 import ListPagination from './ListPagination'
 import TicketForm from './TicketForm'
 import FraudRiskDisplay from './FraudRiskDisplay'
@@ -54,13 +56,13 @@ function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmit
                     <Tooltip title="Sort"><TableSortLabel onClick="sorthandler">Seller name</TableSortLabel></Tooltip>
                   </TableCell>
                   <TableCell>
-                    <Tooltip title="Sort"><TableSortLabel onClick="sorthandler">Price</TableSortLabel></Tooltip>
+                    <Tooltip title="Sort"><TableSortLabel onClick={() => history.push('?orderBy=price&direction=DESC')}>Price</TableSortLabel></Tooltip>
                   </TableCell>
                   <TableCell>
                     <Tooltip title="Sort"><TableSortLabel onClick="sorthandler">Description</TableSortLabel></Tooltip>
                   </TableCell> 
                   <TableCell>
-                    <Tooltip title="Sort"><TableSortLabel onClick="sorthandler">Fraude risk</TableSortLabel></Tooltip>
+                    <TableSortLabel onClick="sorthandler">Fraud risk</TableSortLabel>
                   </TableCell>                                                      
                 </TableRow>
               </TableHead>
@@ -68,7 +70,7 @@ function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmit
                 {list.map(ticket => {
                   return (
                     <TableRow hover key={ticket.id}>
-                      {isAdmin === true && <TableCell><Button onClick={() => deleteTicketFn(ticket.id)}>delete</Button></TableCell>}
+                      {isAdmin === true && <TableCell><IconButton aria-label="Delete" onClick={() => deleteTicketFn(ticket.id)}><DeleteIcon/></IconButton></TableCell>}
                       <TableCell><Button onClick={() => history.push(`/tickets/${ticket.id}`)}>Details</Button></TableCell>
                       <TableCell style={{width: '80px'}}>{ticket.user.firstName} {ticket.user.lastName}</TableCell>
                       <TableCell>{ticket.price}</TableCell>

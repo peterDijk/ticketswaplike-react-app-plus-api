@@ -25,8 +25,8 @@ class TicketDetailsContainer extends React.PureComponent {
     })
   }
 
-  onSubmitTicket = (event) => {
-    event.preventDefault()
+  onSubmitTicket = (ticket) => { 
+    ticket.preventDefault()
     this.setState({
       editTicketMode: false
     })
