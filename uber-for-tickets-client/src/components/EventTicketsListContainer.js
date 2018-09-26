@@ -3,9 +3,9 @@ import {connect} from 'react-redux'
 import queryString from 'query-string'
 import EventTicketsList from './EventTicketsList'
 import {userId} from '../jwt'
+import {isAdmin} from '../jwt'
 
-
-import {loadTickets, addTicket} from '../actions/tickets'
+import {loadTickets, addTicket, deleteTicket} from '../actions/tickets'
 
 class EventsListContainer extends React.PureComponent {
   state = {
@@ -70,12 +70,14 @@ class EventsListContainer extends React.PureComponent {
       <EventTicketsList 
         tickets={tickets} 
         authenticated={this.props.authenticated}
+        isAdmin={this.props.isAdmin}
         onAddFn={this.onAdd}
         onChangeFn={this.onChange}
         onSubmitFn={this.onSubmit}
         addMode={this.state.addMode}
         values={this.state.formValues}
         userId={this.props.userId}
+        deleteTicketFn={this.props.deleteTicket}
         /> 
     )
   }
@@ -86,12 +88,14 @@ class EventsListContainer extends React.PureComponent {
 const mapStateToProps = (state) => ({
   authenticated: state.currentUser !== null,
   userId: state.currentUser && userId(state.currentUser.jwt),
+  isAdmin: state.currentUser && isAdmin(state.currentUser.jwt),
   tickets: state.tickets
 })
 
 const mapDispatchtoProps = {
   loadTickets,
-  addTicket
+  addTicket,
+  deleteTicket
 }
 
 export default connect(mapStateToProps, mapDispatchtoProps)(EventsListContainer)

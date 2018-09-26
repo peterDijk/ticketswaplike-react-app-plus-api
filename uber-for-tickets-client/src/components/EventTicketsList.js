@@ -3,12 +3,8 @@ import { withStyles } from '@material-ui/core/styles'
 import {withRouter} from 'react-router'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
-import Divider from '@material-ui/core/Divider'
 import ListPagination from './ListPagination'
 import TicketForm from './TicketForm'
 import FraudRiskDisplay from './FraudRiskDisplay'
@@ -19,17 +15,12 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Toolbar from '@material-ui/core/Toolbar';
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
 
-function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmitFn, addMode, values, classes, history}) {
+
+function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmitFn, addMode, values, classes, history, isAdmin, deleteTicketFn}) {
   const {count, next, previous, list, event} = tickets
   return (
     <div>
@@ -50,28 +41,16 @@ function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmit
 
           
           {(addMode === true && <TicketForm onChangeFn={onChangeFn} onSubmitFn={onSubmitFn} values={values}/>)}
-{/* // {isAdmin === true && <Button onClick={() => deleteCommentFn(comment.id, ticketId)}>delete</Button>} */}
 
-          {/* <List component="nav">
-            {list.length === 0 && <Typography>no ticket for this event yet..</Typography>}
-            {list.map(ticket => {
-              return (
-                <Link to={`/tickets/${ticket.id}`} key={ticket.id}>
-                  <ListItem button>
-                    <ListItemText primary={`${ticket.user.firstName} ${ticket.user.lastName} - \u20ac ${ticket.price} - ${ticket.desc}`} />
-                    
-                    <FraudRiskDisplay ticketId={ticket.id}/>
-                  </ListItem>
-                  <Divider />
-                </Link>
-              )
-            })}
-          </List> */}
           <Paper>
             <Table className={classes.table} aria-labelledby="tableTitle">
               <TableHead>
                 <TableRow>
-                  <TableCell>
+                  {isAdmin === true &&
+                  <TableCell></TableCell>
+                  }
+                  <TableCell></TableCell>
+                  <TableCell style={{width: '100px'}}>
                     <Tooltip title="Sort"><TableSortLabel onClick="sorthandler">Seller name</TableSortLabel></Tooltip>
                   </TableCell>
                   <TableCell>
@@ -88,10 +67,12 @@ function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmit
               <TableBody>
                 {list.map(ticket => {
                   return (
-                    <TableRow hover style={{cursor: 'pointer'}} onClick={() => history.push(`/tickets/${ticket.id}`)} key={ticket.id}>
-                      <TableCell>{ticket.user.firstName} {ticket.user.lastName}</TableCell>
+                    <TableRow hover key={ticket.id}>
+                      {isAdmin === true && <TableCell><Button onClick={() => deleteTicketFn(ticket.id)}>delete</Button></TableCell>}
+                      <TableCell><Button onClick={() => history.push(`/tickets/${ticket.id}`)}>Details</Button></TableCell>
+                      <TableCell style={{width: '80px'}}>{ticket.user.firstName} {ticket.user.lastName}</TableCell>
                       <TableCell>{ticket.price}</TableCell>
-                      <TableCell>{ticket.desc}</TableCell>
+                      <TableCell style={{width: '250px'}}>{ticket.desc}</TableCell>
                       <TableCell><FraudRiskDisplay ticketId={ticket.id}/></TableCell>
                     </TableRow>
                   )
@@ -127,6 +108,9 @@ const styles = theme => ({
   root: {
     display: 'flex',
   },
+  table: {
+
+  }
 })
 
 export default withRouter(withStyles(styles)(EventTicketsList))
