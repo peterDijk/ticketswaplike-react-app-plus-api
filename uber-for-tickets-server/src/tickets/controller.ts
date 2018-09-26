@@ -1,4 +1,4 @@
-import {JsonController, Get, Post, HttpCode, BodyParam, Param, BadRequestError, QueryParam, Authorized, CurrentUser} from 'routing-controllers'
+import {JsonController, Get, Post, Put, HttpCode, BodyParam, Param, BadRequestError, QueryParam, Authorized, CurrentUser} from 'routing-controllers'
 import {pageLimitTickets} from '../constants'
 import {Ticket} from './entity'
 import {Event} from '../events/entity'
@@ -71,6 +71,26 @@ export default class TicketController {
     const ticket = await Ticket.findOne(ticketId, {relations: ['event', 'user']})
     if (!ticket) throw new BadRequestError(`Ticket does not exist`)
     return ticket
+  }
+
+  @Authorized()
+  @Put('/tickets/:ticketId')
+  @HttpCode(200)
+  async updateTicket(
+    @BodyParam("price") price: number,
+    @BodyParam("desc") desc: string,
+    @BodyParam("imageUrl") imageUrl: string,
+    @Param('ticketId') ticketId: number,
+    @CurrentUser() currentUser: User
+  ) {
+    const ticket = await Ticket.findOne(ticketId, {relations: ['user']})
+    if (!ticket) throw new BadRequestError(`Event does not exist`)
+
+    if (ticket.user.id !== currentUser.id) {
+      throw new BadRequestError(`Only author can edit ticket`)
+    }
+
+    return Ticket.merge(ticket, {price, desc, imageUrl}).save()
   }
 
   @Get('/tickets/:ticketId/fraudrisks')

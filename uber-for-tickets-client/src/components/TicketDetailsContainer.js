@@ -1,13 +1,35 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
 import queryString from 'query-string'
-import {loadTicket, loadComments, addComment} from '../actions/selectTicket'
+import {userId} from '../jwt'
+import {loadTicket, loadComments, addComment, editTicket} from '../actions/selectTicket'
 import TicketDetails from './TicketDetails'
 
 class TicketDetailsContainer extends React.PureComponent {
   state = {
     addMode: false,
-    editMode: false
+    editTicketMode: false
+  }
+
+  onEditTicket = () => {
+    const {ticket} = this.props
+    this.setState({
+      ...this.state,
+      editTicketMode: true,
+      formValues: {
+        desc: ticket.desc,
+        price: ticket.price,
+        imageUrl: ticket.imageUrl
+      }
+    })
+  }
+
+  onSubmitTicket = (event) => {
+    event.preventDefault()
+    this.setState({
+      editTicketMode: false
+    })
+    this.props.editTicket(this.props.ticket.id, this.state.formValues)    
   }
 
   onAdd = () => {
@@ -68,11 +90,16 @@ class TicketDetailsContainer extends React.PureComponent {
       <TicketDetails 
         ticket={ticket} 
         authenticated={this.props.authenticated}
+        userId={this.props.userId}
         onAddFn={this.onAdd}
         onChangeFn={this.onChange}
         onSubmitFn={this.onSubmit}
         addMode={this.state.addMode}
         values={this.state.formValues}
+        editTicketMode={this.state.editTicketMode}
+        editTicketValues={this.state.formValues}
+        onEditTicketFn={this.onEditTicket}
+        onSubmitTicketFn={this.onSubmitTicket}
       />
     )
   }
@@ -80,13 +107,15 @@ class TicketDetailsContainer extends React.PureComponent {
 
 const mapStateToProps = (state) => ({
   authenticated: state.currentUser !== null,
+  userId: state.currentUser && userId(state.currentUser.jwt),
   ticket: state.selectedTicket
 })
 
 const mapDispatchtoProps = {
   loadTicket,
   loadComments,
-  addComment
+  addComment,
+  editTicket
 }
 
 export default connect(mapStateToProps, mapDispatchtoProps)(TicketDetailsContainer)

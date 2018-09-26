@@ -1,7 +1,8 @@
 import {
   TICKET_LOADED,
   COMMENTS_LOADED,
-  COMMENT_ADD_SUCCESS
+  COMMENT_ADD_SUCCESS,
+  EDIT_TICKET_SUCCESS
 } from '../actions/selectTicket'
 
 export default (state = {}, action = {}) => {
@@ -18,7 +19,14 @@ export default (state = {}, action = {}) => {
           list: [action.payload, ...state.comments.list],
           count: state.comments.count + 1
         }
-    }
+      }
+    case EDIT_TICKET_SUCCESS:
+      return {
+        ...state,
+        price: action.payload.price,
+        desc: action.payload.desc,
+        imageUrl: action.payload.imageUrl
+      }
     default: 
       return state
   }

@@ -49,7 +49,7 @@ function TicketForm(props) {
             </Grid>              
           
             <Grid item>
-              <Button type="submit">Add ticket</Button>
+              <Button type="submit">{(props.editTicketMode === true) ? 'Edit ticket' : 'Add ticket'}</Button>
             </Grid>
           </Grid>
         </form>

@@ -14,7 +14,7 @@ import FraudRiskDisplay from './FraudRiskDisplay'
 
 import {Link} from 'react-router-dom'
 
-function EventTicketsList({tickets, authenticated, userId, onAddFn, onChangeFn, onSubmitFn, addMode, values}) {
+function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmitFn, addMode, values}) {
   const {count, next, previous, list, event} = tickets
   return (
     <div>
@@ -44,7 +44,7 @@ function EventTicketsList({tickets, authenticated, userId, onAddFn, onChangeFn, 
                 <Link to={`/tickets/${ticket.id}`} key={ticket.id}>
                   <ListItem button>
                     <ListItemText primary={`${ticket.user.firstName} ${ticket.user.lastName} - \u20ac ${ticket.price} - ${ticket.desc}`} />
-                    {userId && userId === ticket.user.id && <Button>Edit</Button>}
+                    
                     <FraudRiskDisplay ticketId={ticket.id}/>
                   </ListItem>
                   <Divider />

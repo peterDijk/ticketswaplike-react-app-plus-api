@@ -40,14 +40,14 @@ class TopBar extends React.PureComponent {
 
           {
             !this.props.authenticated &&
-            <Button color="inherit"><Link to="/login">Login</Link></Button>
+            <Link to="/login"><Button color="inherit">Login</Button></Link>
           }
           {
             !this.props.authenticated &&
-            <Button color="inherit"><Link to="/signup">Sign up</Link></Button>
+            <Link to="/signup"><Button color="inherit">Sign up</Button></Link>
           }
           {
-            <Button color="inherit"><Link to="/events">All Events</Link></Button>
+            <Link to="/events"><Button color="inherit">All Events</Button></Link>
           }
           {/* {
             this.props.authenticated &&
@@ -55,7 +55,7 @@ class TopBar extends React.PureComponent {
           } */}
           {
             this.props.authenticated &&
-            <Button color="inherit"><Link to="/logout">Log out</Link></Button>
+            <Link to="/logout"><Button color="inherit">Log out</Button></Link>
           }
         </Toolbar>
       </AppBar>

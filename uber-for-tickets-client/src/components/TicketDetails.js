@@ -11,10 +11,11 @@ import Divider from '@material-ui/core/Divider'
 import FraudRiskDisplay from './FraudRiskDisplay'
 import ListPagination from './ListPagination'
 import CommentForm from './CommentForm'
+import TicketForm from './TicketForm'
 
 import {Link} from 'react-router-dom'
 
-function TicketDetails({ticket, authenticated, onAddFn, onChangeFn, onSubmitFn, addMode, values}) {
+function TicketDetails({ticket, authenticated, userId, onAddFn, onChangeFn, onSubmitFn, addMode, values, editTicketMode, editTicketValues, onEditTicketFn, onSubmitTicketFn}) {
   const {comments} = ticket
   return (
     <Grid container direction="column" justify="center" spacing={24}>
@@ -33,10 +34,16 @@ function TicketDetails({ticket, authenticated, onAddFn, onChangeFn, onSubmitFn, 
               <Typography>Description: {ticket.desc}</Typography>
               <Typography>Seller: {ticket.user.firstName} {ticket.user.lastName} ({ticket.user.email})</Typography>
               <FraudRiskDisplay ticketId={ticket.id}/>
+              {userId && userId === ticket.user.id && <Button onClick={onEditTicketFn}>Edit ticket details</Button>}
             </Grid>
           </Grid>
         </Paper>
       </Grid>
+      {(editTicketMode === true &&
+          <Grid item>
+            <TicketForm values={editTicketValues} onChangeFn={onChangeFn} onSubmitFn={onSubmitTicketFn} editTicketMode={editTicketMode}/>
+          </Grid>
+        )}
       <Grid item>
         {authenticated === true && <Button onClick={onAddFn}>Add comment</Button>}
         {(addMode === true && <CommentForm onChangeFn={onChangeFn} onSubmitFn={onSubmitFn} values={values}/>)}
@@ -57,7 +64,7 @@ function displayComments(commentsList, count, next, previous) {
       <Typography variant="subheading">Comments:</Typography>
       {commentsList.map(comment => {
         return (
-          <div>
+          <div key={comment.id}>
             <Typography variant="caption">by {comment.user.firstName} {comment.user.lastName} on {formatDateTime(comment.dateCreated)}</Typography>
             <Typography>{comment.comment}</Typography>
             <Divider style={{marginBottom: 16}}/>
