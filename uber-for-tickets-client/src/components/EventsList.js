@@ -19,7 +19,7 @@ import EditIcon from '@material-ui/icons/Edit'
 
 import {Link} from 'react-router-dom'
 
-function EventsList({authenticated, isAdmin, formValues, events, classes, addMode, onAddFn, onChangeFn, onSubmitFn, onEditFn, editMode, onSubmitEditFn }) {
+function EventsList({authenticated, isAdmin, formValues, events, classes, addMode, onAddFn, onChangeFn, onSubmitFn, onEditFn, editMode, onSubmitEditFn, deleteEventFn }) {
   const {list, count, next, previous} = events
   return (
     <div>
@@ -56,7 +56,7 @@ function EventsList({authenticated, isAdmin, formValues, events, classes, addMod
                 {isAdmin === true &&
                   <div>
                     <IconButton aria-label="Edit" onClick={() => onEditFn(event.id)}><EditIcon/></IconButton>
-                    <IconButton aria-label="Delete"><DeleteIcon/></IconButton>
+                    <IconButton aria-label="Delete" onClick={() => deleteEventFn(event.id)}><DeleteIcon/></IconButton>
                   </div>
                 }
               </CardActions>

@@ -6,7 +6,7 @@ import {isAdmin} from '../jwt'
 import EventsList from './EventsList'
 
 
-import {loadEvents, addEvent, editEvent} from '../actions/events'
+import {loadEvents, addEvent, editEvent, deleteEvent} from '../actions/events'
 
 class EventsListContainer extends React.PureComponent {
   state = {
@@ -124,6 +124,7 @@ class EventsListContainer extends React.PureComponent {
           onEditFn={this.onEdit}
           editMode={this.state.editMode}
           onSubmitEditFn={this.onSubmitEdit}
+          deleteEventFn={this.props.deleteEvent}
         />
     )
   }
@@ -139,7 +140,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchtoProps = {
   loadEvents,
   addEvent,
-  editEvent
+  editEvent,
+  deleteEvent
 }
 
 export default connect(mapStateToProps, mapDispatchtoProps)(EventsListContainer)

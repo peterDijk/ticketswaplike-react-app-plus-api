@@ -1,7 +1,8 @@
 import {
   EVENTS_FETCHED,
   EVENT_ADD_SUCCESS,
-  EVENT_EDIT_SUCCESS
+  EVENT_EDIT_SUCCESS,
+  EVENT_DELETE_SUCCESS
 } from '../actions/events'
 
 export default (state = [], action = {}) => {
@@ -22,6 +23,14 @@ export default (state = [], action = {}) => {
         ...state,
         list: newList
       }
+    case EVENT_DELETE_SUCCESS:
+      const newEventsList = [...state.list]
+      const eventsExclDeleted = newEventsList.filter(event => event.id !== action.payload.id)
+      return {
+        ...state,
+        list: eventsExclDeleted,
+        count: state.count - 1
+    }
     default: 
       return state
   }
