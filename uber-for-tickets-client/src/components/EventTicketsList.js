@@ -1,5 +1,6 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
+import {withRouter} from 'react-router'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import List from '@material-ui/core/List';
@@ -28,7 +29,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 
-function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmitFn, addMode, values, classes}) {
+function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmitFn, addMode, values, classes, history}) {
   const {count, next, previous, list, event} = tickets
   return (
     <div>
@@ -87,7 +88,7 @@ function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmit
               <TableBody>
                 {list.map(ticket => {
                   return (
-                    <TableRow hover onClick="todetails" key={ticket.id}>
+                    <TableRow hover style={{cursor: 'pointer'}} onClick={() => history.push(`/tickets/${ticket.id}`)} key={ticket.id}>
                       <TableCell>{ticket.user.firstName} {ticket.user.lastName}</TableCell>
                       <TableCell>{ticket.price}</TableCell>
                       <TableCell>{ticket.desc}</TableCell>
@@ -128,4 +129,4 @@ const styles = theme => ({
   },
 })
 
-export default withStyles(styles)(EventTicketsList)
+export default withRouter(withStyles(styles)(EventTicketsList))
