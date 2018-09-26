@@ -3,7 +3,7 @@ import {
   COMMENTS_LOADED,
   COMMENT_ADD_SUCCESS,
   EDIT_TICKET_SUCCESS,
-  DELETE_TICKET_SUCCESS
+  DELETE_COMMENT_SUCCESS
 } from '../actions/selectTicket'
 
 export default (state = {}, action = {}) => {
@@ -28,7 +28,7 @@ export default (state = {}, action = {}) => {
         desc: action.payload.desc,
         imageUrl: action.payload.imageUrl
       }
-    case DELETE_TICKET_SUCCESS:
+    case DELETE_COMMENT_SUCCESS:
       const newCommentsList = [...state.comments.list]
       const commentsExclDeleted = newCommentsList.filter(comment => comment.id !== action.payload.id)
       return {

@@ -9,7 +9,7 @@ export const FRAUD_RISK_FETCHED = 'FRAUD_RISK_FETCHED'
 export const COMMENTS_LOADED = 'COMMENTS_LOADED'
 export const COMMENT_ADD_SUCCESS = 'COMMENT_ADD_SUCCESS'
 export const EDIT_TICKET_SUCCESS = 'EDIT_TICKET_SUCCESS'
-export const DELETE_TICKET_SUCCESS = 'DELETE_TICKET_SUCCESS'
+export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS'
 
 function ticketLoaded(ticket) {
   return {
@@ -54,7 +54,7 @@ function editTicketSuccess(ticket) {
 
 function commentDeleteSuccess(comment) {
   return {
-    type: DELETE_TICKET_SUCCESS,
+    type: DELETE_COMMENT_SUCCESS,
     payload: comment
   }
 }

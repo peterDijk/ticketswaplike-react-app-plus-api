@@ -35,7 +35,7 @@ function TicketDetails({ticket, authenticated, userId, isAdmin, onAddFn, onChang
               <Typography>Description: {ticket.desc}</Typography>
               <Typography>Seller: {ticket.user.firstName} {ticket.user.lastName} ({ticket.user.email})</Typography>
               <FraudRiskDisplay ticketId={ticket.id}/>
-              {userId && userId === ticket.user.id && <Button onClick={onEditTicketFn}>Edit ticket details</Button>}
+              {userId && (userId === ticket.user.id || isAdmin === true) && <Button onClick={onEditTicketFn}>Edit ticket details</Button>}
             </Grid>
             <Grid item>
               <img src={ticket.imageUrl} alt="" width="200"/>
@@ -70,7 +70,7 @@ function displayComments(commentsList, count, next, previous, isAdmin, deleteCom
         return (
           <div key={comment.id}>
             <Typography variant="caption">by {comment.user.firstName} {comment.user.lastName} on {formatDateTime(comment.dateCreated)}</Typography>
-            {isAdmin && <Button onClick={() => deleteCommentFn(comment.id, ticketId)}>delete</Button>}
+            {isAdmin === true && <Button onClick={() => deleteCommentFn(comment.id, ticketId)}>delete</Button>}
             <Typography>{comment.comment}</Typography>
             <Divider style={{marginBottom: 16}}/>
           </div>

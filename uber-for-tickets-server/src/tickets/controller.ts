@@ -1,4 +1,4 @@
-import {JsonController, Get, Post, Put, HttpCode, BodyParam, Param, BadRequestError, QueryParam, Authorized, CurrentUser} from 'routing-controllers'
+import {JsonController, Get, Post, Put, HttpCode, BodyParam, Param, BadRequestError, QueryParam, Authorized, CurrentUser, Delete} from 'routing-controllers'
 import {pageLimitTickets} from '../constants'
 import {Ticket} from './entity'
 import {Event} from '../events/entity'
@@ -86,11 +86,15 @@ export default class TicketController {
     const ticket = await Ticket.findOne(ticketId, {relations: ['user']})
     if (!ticket) throw new BadRequestError(`Event does not exist`)
 
+    if (currentUser.isAdmin === true) {
+      return Ticket.merge(ticket, {price, desc, imageUrl}).save()
+    }
     if (ticket.user.id !== currentUser.id) {
       throw new BadRequestError(`Only author can edit ticket`)
     }
 
     return Ticket.merge(ticket, {price, desc, imageUrl}).save()
+    
   }
 
   @Get('/tickets/:ticketId/fraudrisks')
@@ -104,5 +108,25 @@ export default class TicketController {
     const ticketsEvent = await Ticket.find({event: ticket.event})
     // comments
     return calcFraudRisk(ticket, numAuthorTickets, ticketsEvent)
+  }
+
+  @Authorized()
+  @Delete('/tickets/:ticketId')
+  @HttpCode(202)
+  async deleteTicket(
+    @Param('ticketId') ticketId: number,
+    @CurrentUser() user: User
+  ) {
+    const userResult = await User.findOne(user)
+    if (!userResult) throw new BadRequestError(`User does not exist`)
+    if (userResult.isAdmin === false) {
+      throw new BadRequestError(`Only admins are allowed to delete tickets`)
+    }
+
+    const ticket = await Ticket.findOne(ticketId)
+    if (!ticket) throw new BadRequestError(`Ticket does not exist`)
+    ticket.remove()
+
+    return ticket
   }
 }

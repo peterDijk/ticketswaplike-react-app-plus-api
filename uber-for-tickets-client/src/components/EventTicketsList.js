@@ -35,7 +35,7 @@ function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmit
 
           
           {(addMode === true && <TicketForm onChangeFn={onChangeFn} onSubmitFn={onSubmitFn} values={values}/>)}
-
+{/* // {isAdmin === true && <Button onClick={() => deleteCommentFn(comment.id, ticketId)}>delete</Button>} */}
 
           <List component="nav">
             {list.length === 0 && <Typography>no ticket for this event yet..</Typography>}

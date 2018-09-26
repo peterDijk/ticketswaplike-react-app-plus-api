@@ -6,6 +6,7 @@ import {logout} from './users'
 
 export const TICKETS_FETCHED = 'TICKETS_FETCHED'
 export const TICKET_ADD_SUCCESS = 'TICKET_ADD_SUCCESS'
+export const TICKET_DELETE_SUCCESS = 'TICKET_DELETE_SUCCESS'
 
 
 function ticketsFetched({tickets, count, next, previous, event}) {
@@ -18,6 +19,13 @@ function ticketsFetched({tickets, count, next, previous, event}) {
 function ticketAddSuccess(ticket) {
   return {
     type: TICKET_ADD_SUCCESS,
+    payload: ticket
+  }
+}
+
+function ticketDeleteSuccess(ticket) {
+  return {
+    type: TICKET_DELETE_SUCCESS,
     payload: ticket
   }
 }
@@ -51,3 +59,16 @@ export const addTicket = (eventId, formValues) => (dispatch, getState) => {
     .catch(err => console.error(err))
 }
 
+export const deleteTicket = (ticketId) => (dispatch, getState) => {
+  const state = getState()
+  if (!state.currentUser) return null
+  const jwt = state.currentUser.jwt
+
+  if (isExpired(jwt)) return dispatch(logout())
+
+  request
+    .delete(`${apiUrl}/tickets/${ticketId}`)
+    .set('Authorization', `Bearer ${jwt}`)
+    .then(result => dispatch(ticketDeleteSuccess(result.body)))
+    .catch(err => console.error(err))
+}
