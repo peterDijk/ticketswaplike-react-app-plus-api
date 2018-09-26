@@ -12,13 +12,13 @@ class LoginPage extends PureComponent {
 
 	render() {
 		const {location, history} = this.props
-		if (this.props.currentUser) {
-				return (
-				<Redirect to="/" />
-			)
-			// console.log(history)
-			// history.goBack()
-		}
+		// if (this.props.currentUser) {
+		// 		return (
+		// 		<Redirect to="/" />
+		// 	)
+		// 	// console.log(history)
+		// 	// history.goBack()
+		// }
 
 		return (
 			<div>

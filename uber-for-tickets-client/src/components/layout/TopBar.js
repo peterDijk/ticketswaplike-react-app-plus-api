@@ -10,11 +10,18 @@ import {connect} from 'react-redux'
 import AccountIcon from '@material-ui/icons/AccountBox'
 import {getUser, logout} from '../../actions/users'
 import {Link} from 'react-router-dom'
+import LoginPage from '../login/LoginPage'
 
 
 class TopBar extends React.PureComponent {
   state = {
     loginMode : false
+  }
+
+  onLoginClick = () => {
+    this.setState({
+      loginMode: true
+    })
   }
 
   componentDidMount() {
@@ -25,6 +32,11 @@ class TopBar extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (prevProps.authenticated !== this.props.authenticated) {
+      if (this.props.authenticated) {
+        this.setState({
+          loginMode: false
+        })
+      }
       if (this.props.authenticated) {
         if (this.props.users === null) this.props.getUser(userId(this.props.currentUser.jwt))
       }
@@ -47,9 +59,13 @@ class TopBar extends React.PureComponent {
             this.props.isAdmin === true && '(role: administrator)'
           }
 
-          {
+          {/* {
             !this.props.authenticated &&
             <Link to="/login"><Button color="inherit">Login</Button></Link>
+          } */}
+          {
+            !this.props.authenticated &&
+            <Button color="inherit" onClick={this.onLoginClick}>Login</Button>
           }
           {
             !this.props.authenticated &&
@@ -67,6 +83,9 @@ class TopBar extends React.PureComponent {
             <Button color="inherit" onClick={() => this.props.logout()}>Log out</Button>
           }
         </Toolbar>
+        {this.state.loginMode === true &&
+          <LoginPage />
+        }
       </AppBar>
     )
   }
