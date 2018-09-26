@@ -12,6 +12,8 @@ import FraudRiskDisplay from './FraudRiskDisplay'
 import ListPagination from './ListPagination'
 import CommentForm from './CommentForm'
 import TicketForm from './TicketForm'
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
 
 import {Link} from 'react-router-dom'
 
@@ -69,8 +71,9 @@ function displayComments(commentsList, count, next, previous, isAdmin, deleteCom
       {commentsList.map(comment => {
         return (
           <div key={comment.id}>
-            <Typography variant="caption">by {comment.user.firstName} {comment.user.lastName} on {formatDateTime(comment.dateCreated)}</Typography>
-            {isAdmin === true && <Button onClick={() => deleteCommentFn(comment.id, ticketId)}>delete</Button>}
+            {isAdmin === true && <IconButton aria-label="Delete" onClick={() => deleteCommentFn(comment.id, ticketId)}><DeleteIcon/></IconButton>}
+            <Typography variant="caption" style={{display: 'inline'}}>by {comment.user.firstName} {comment.user.lastName} on {formatDateTime(comment.dateCreated)}</Typography>
+            
             <Typography>{comment.comment}</Typography>
             <Divider style={{marginBottom: 16}}/>
           </div>
