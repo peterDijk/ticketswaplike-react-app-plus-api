@@ -66,6 +66,7 @@ function TicketDetails({ticket, authenticated, userId, isAdmin, onAddFn, onChang
 function displayComments(commentsList, count, next, previous, isAdmin, deleteCommentFn, ticketId) {
   return (
     <div>
+      
       <ListPagination count={count} next={next} previous={previous}/>
       <Typography variant="subheading">Comments:</Typography>
       {commentsList.map(comment => {

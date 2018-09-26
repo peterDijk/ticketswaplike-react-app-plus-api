@@ -38,51 +38,56 @@ function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmit
             {authenticated === true && <Button onClick={onAddFn}>Add ticket</Button>}
           </Paper>
         </Grid>
-        <Grid item>
-          <ListPagination count={count} next={next} previous={previous}/>
-
-          
-          {(addMode === true && <TicketForm onChangeFn={onChangeFn} onSubmitFn={onSubmitFn} values={values}/>)}
-
-          <Paper>
-            <Table className={classes.table} aria-labelledby="tableTitle">
-              <TableHead>
-                <TableRow>
-                  {isAdmin === true &&
-                  <TableCell></TableCell>
-                  }
-                  <TableCell></TableCell>
-                  <TableCell style={{width: '100px'}}>
-                    <Tooltip title="Sort"><TableSortLabel>Seller name</TableSortLabel></Tooltip>
-                  </TableCell>
-                  <TableCell>
-                    <Tooltip title="Sort"><TableSortLabel onClick={() => history.push('?orderBy=price&direction=DESC')}>Price</TableSortLabel></Tooltip>
-                  </TableCell>
-                  <TableCell>
-                    <Tooltip title="Sort"><TableSortLabel>Description</TableSortLabel></Tooltip>
-                  </TableCell> 
-                  <TableCell>
-                    <TableSortLabel>Fraud risk</TableSortLabel>
-                  </TableCell>                                                      
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {list.map(ticket => {
-                  return (
-                    <TableRow hover key={ticket.id}>
-                      {isAdmin === true && <TableCell><IconButton aria-label="Delete" onClick={() => deleteTicketFn(ticket.id)}><DeleteIcon/></IconButton></TableCell>}
-                      <TableCell><Button onClick={() => history.push(`/tickets/${ticket.id}`)}>Details</Button></TableCell>
-                      <TableCell style={{width: '80px'}}>{ticket.user.firstName} {ticket.user.lastName}</TableCell>
-                      <TableCell>{ticket.price}</TableCell>
-                      <TableCell style={{width: '250px'}}>{ticket.desc}</TableCell>
-                      <TableCell><FraudRiskDisplay ticketId={ticket.id}/></TableCell>
-                    </TableRow>
-                  )
-                })}
-              </TableBody>
-            </Table>
-          </Paper>
-        </Grid>
+        {list.length === 0 &&
+          <Grid item>
+            <Typography>No tickets offered yet for this event</Typography>
+          </Grid>
+          }
+        {list.length > 0 &&
+          <Grid item>
+            {(addMode === true && <TicketForm onChangeFn={onChangeFn} onSubmitFn={onSubmitFn} values={values}/>)}
+            <Typography variant="headline">Tickets offered for this event</Typography>
+            <Paper>
+            <ListPagination count={count} next={next} previous={previous}/>
+              <Table className={classes.table} aria-labelledby="tableTitle">
+                <TableHead>
+                  <TableRow>
+                    {isAdmin === true &&
+                    <TableCell></TableCell>
+                    }
+                    <TableCell></TableCell>
+                    <TableCell style={{width: '100px'}}>
+                      <Tooltip title="Sort"><TableSortLabel>Seller name</TableSortLabel></Tooltip>
+                    </TableCell>
+                    <TableCell>
+                      <Tooltip title="Sort"><TableSortLabel onClick={() => history.push('?orderBy=price&direction=DESC')}>Price</TableSortLabel></Tooltip>
+                    </TableCell>
+                    <TableCell>
+                      <Tooltip title="Sort"><TableSortLabel>Description</TableSortLabel></Tooltip>
+                    </TableCell> 
+                    <TableCell>
+                      <TableSortLabel>Fraud risk</TableSortLabel>
+                    </TableCell>                                                      
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {list.map(ticket => {
+                    return (
+                      <TableRow hover key={ticket.id}>
+                        {isAdmin === true && <TableCell><IconButton aria-label="Delete" onClick={() => deleteTicketFn(ticket.id)}><DeleteIcon/></IconButton></TableCell>}
+                        <TableCell><Button onClick={() => history.push(`/tickets/${ticket.id}`)}>Details</Button></TableCell>
+                        <TableCell style={{width: '80px'}}>{ticket.user.firstName} {ticket.user.lastName}</TableCell>
+                        <TableCell>{ticket.price}</TableCell>
+                        <TableCell style={{width: '250px'}}>{ticket.desc}</TableCell>
+                        <TableCell><FraudRiskDisplay ticketId={ticket.id}/></TableCell>
+                      </TableRow>
+                    )
+                  })}
+                </TableBody>
+              </Table>
+            </Paper>
+          </Grid>
+        }
       </Grid>
       
     </div>
