@@ -8,10 +8,15 @@ import {userId} from '../../jwt'
 import {isAdmin} from '../../jwt'
 import {connect} from 'react-redux'
 import AccountIcon from '@material-ui/icons/AccountBox'
-import {getUser} from '../../actions/users'
+import {getUser, logout} from '../../actions/users'
 import {Link} from 'react-router-dom'
 
+
 class TopBar extends React.PureComponent {
+  state = {
+    loginMode : false
+  }
+
   componentDidMount() {
     if (this.props.authenticated) {
       if (this.props.users === null) this.props.getUser(userId(this.props.currentUser.jwt))
@@ -59,7 +64,7 @@ class TopBar extends React.PureComponent {
           } */}
           {
             this.props.authenticated &&
-            <Link to="/logout"><Button color="inherit">Log out</Button></Link>
+            <Button color="inherit" onClick={() => this.props.logout()}>Log out</Button>
           }
         </Toolbar>
       </AppBar>
@@ -77,7 +82,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-  getUser
+  getUser,
+  logout
 }
 
 export default withRouter(
