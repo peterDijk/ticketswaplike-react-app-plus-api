@@ -1,5 +1,6 @@
-import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, Timestamp, OneToMany} from 'typeorm'
+import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, Timestamp, OneToMany, ManyToOne} from 'typeorm'
 import {Ticket} from '../tickets/entity'
+import User from '../users/entity'
 
 // import User from '../users/entity'
 
@@ -29,6 +30,9 @@ export class Event extends BaseEntity {
 
   @OneToMany(_ => Ticket, ticket => ticket.event)
   tickets: Ticket[]
+
+  @ManyToOne(_ => User, user => user.events)
+  user: User
 
   // @ManyToOne(_ => User, user => user.events)
   // user: User

@@ -4,6 +4,7 @@ import { MinLength, IsString, IsEmail } from 'class-validator';
 import * as bcrypt from 'bcrypt'
 import { Ticket } from '../tickets/entity'
 import Comment from '../comments/entity'
+import {Event} from '../events/entity'
 
 @Entity()
 export default class User extends BaseEntity {
@@ -36,6 +37,9 @@ export default class User extends BaseEntity {
 
   @OneToMany(_ => Comment, comment => comment.user)
   comments: Comment[]
+
+  @OneToMany(_ => Event, event => event.user)
+  events: Event[]
 
   async setPassword(rawPassword: string) {
     const hash = await bcrypt.hash(rawPassword, 10)

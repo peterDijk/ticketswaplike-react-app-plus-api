@@ -1,11 +1,13 @@
-import {JsonController, Get, Post, Put, HttpCode, Body, BodyParam, Param, NotFoundError, QueryParam} from 'routing-controllers'
+import {JsonController, Get, Post, Put, HttpCode, Body, BodyParam, Param, NotFoundError, QueryParam, Authorized, CurrentUser} from 'routing-controllers'
 import {pageLimitEvents} from '../constants'
 import {Event} from './entity'
+import User from '../users/entity'
 import { MoreThan} from 'typeorm'
 
 @JsonController()
 export default class EventController {
 
+  @Authorized()
   @Post('/events')
   @HttpCode(201)
   async createEvent(
@@ -13,9 +15,10 @@ export default class EventController {
     @BodyParam("desc") desc: string,
     @BodyParam("imageUrl") imageUrl: string,
     @BodyParam("startDate") startDate: Date,
-    @BodyParam("endDate") endDate: Date
+    @BodyParam("endDate") endDate: Date,
+    @CurrentUser() user: User
   ) {
-    const newEvent = await Event.create({name, desc, imageUrl, startDate, endDate})
+    const newEvent = await Event.create({name, desc, imageUrl, startDate, endDate, user})
     return newEvent.save()
   }
 

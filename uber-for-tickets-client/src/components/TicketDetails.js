@@ -28,6 +28,7 @@ function TicketDetails({ticket, authenticated, userId, onAddFn, onChangeFn, onSu
               <img src={ticket.event.imageUrl || `http://thechurchontheway.org/wp-content/uploads/2016/05/placeholder1.png`} width={400} alt=""/>
               <Typography>starts: {formatDateTime(ticket.event.startDate)}</Typography>
               <Typography>ends: {formatDateTime(ticket.event.endDate)}</Typography>
+              <Link to={`/events/${ticket.event.id}/tickets/`}><Button>Back to all tickets</Button></Link>
             </Grid>
             <Grid item>
               <Typography variant="headline">Price: {ticket.price}</Typography>
@@ -35,6 +36,9 @@ function TicketDetails({ticket, authenticated, userId, onAddFn, onChangeFn, onSu
               <Typography>Seller: {ticket.user.firstName} {ticket.user.lastName} ({ticket.user.email})</Typography>
               <FraudRiskDisplay ticketId={ticket.id}/>
               {userId && userId === ticket.user.id && <Button onClick={onEditTicketFn}>Edit ticket details</Button>}
+            </Grid>
+            <Grid item>
+              <img src={ticket.imageUrl} alt="" width="200"/>
             </Grid>
           </Grid>
         </Paper>

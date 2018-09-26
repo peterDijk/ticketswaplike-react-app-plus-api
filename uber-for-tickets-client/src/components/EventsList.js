@@ -2,6 +2,7 @@ import React from 'react'
 import {Redirect} from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
 import ListPagination from './ListPagination'
+import EventForm from './EventForm'
 
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card';
@@ -15,10 +16,12 @@ import Typography from '@material-ui/core/Typography';
 
 import {Link} from 'react-router-dom'
 
-function EventsList({events, classes }) {
+function EventsList({authenticated, formValues, events, classes, addMode, onAddFn, onChangeFn, onSubmitFn }) {
   const {list, count, next, previous} = events
   return (
     <div>
+      {authenticated === true && <Button onClick={onAddFn}>Add event</Button>}
+      {addMode === true && <EventForm values={formValues} onAddFn={onAddFn} onChangeFn={onChangeFn} onSubmitFn={onSubmitFn} />}
       <ListPagination count={count} next={next} previous={previous}/>
 
       <Grid container direction="row" justify="center" spacing={24}>
