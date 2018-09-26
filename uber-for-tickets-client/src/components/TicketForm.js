@@ -33,6 +33,7 @@ function TicketForm(props) {
                 value={props.values.price}
                 onChange={props.onChangeFn}
                 margin="normal"
+                type="number"
                 required={true}
               />
             </Grid>
@@ -44,7 +45,7 @@ function TicketForm(props) {
                 value={props.values.imageUrl}
                 onChange={props.onChangeFn}
                 margin="normal"
-                required={true}
+                required={false}
               />
             </Grid>              
           
