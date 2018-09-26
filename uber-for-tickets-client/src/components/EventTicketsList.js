@@ -14,7 +14,21 @@ import FraudRiskDisplay from './FraudRiskDisplay'
 
 import {Link} from 'react-router-dom'
 
-function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmitFn, addMode, values}) {
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
+import Toolbar from '@material-ui/core/Toolbar';
+import Checkbox from '@material-ui/core/Checkbox';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import DeleteIcon from '@material-ui/icons/Delete';
+import FilterListIcon from '@material-ui/icons/FilterList';
+
+function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmitFn, addMode, values, classes}) {
   const {count, next, previous, list, event} = tickets
   return (
     <div>
@@ -37,7 +51,7 @@ function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmit
           {(addMode === true && <TicketForm onChangeFn={onChangeFn} onSubmitFn={onSubmitFn} values={values}/>)}
 {/* // {isAdmin === true && <Button onClick={() => deleteCommentFn(comment.id, ticketId)}>delete</Button>} */}
 
-          <List component="nav">
+          {/* <List component="nav">
             {list.length === 0 && <Typography>no ticket for this event yet..</Typography>}
             {list.map(ticket => {
               return (
@@ -51,7 +65,39 @@ function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmit
                 </Link>
               )
             })}
-          </List>
+          </List> */}
+          <Paper>
+            <Table className={classes.table} aria-labelledby="tableTitle">
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    <Tooltip title="Sort"><TableSortLabel onClick="sorthandler">Seller name</TableSortLabel></Tooltip>
+                  </TableCell>
+                  <TableCell>
+                    <Tooltip title="Sort"><TableSortLabel onClick="sorthandler">Price</TableSortLabel></Tooltip>
+                  </TableCell>
+                  <TableCell>
+                    <Tooltip title="Sort"><TableSortLabel onClick="sorthandler">Description</TableSortLabel></Tooltip>
+                  </TableCell> 
+                  <TableCell>
+                    <Tooltip title="Sort"><TableSortLabel onClick="sorthandler">Fraude risk</TableSortLabel></Tooltip>
+                  </TableCell>                                                      
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {list.map(ticket => {
+                  return (
+                    <TableRow hover onClick="todetails" key={ticket.id}>
+                      <TableCell>{ticket.user.firstName} {ticket.user.lastName}</TableCell>
+                      <TableCell>{ticket.price}</TableCell>
+                      <TableCell>{ticket.desc}</TableCell>
+                      <TableCell><FraudRiskDisplay ticketId={ticket.id}/></TableCell>
+                    </TableRow>
+                  )
+                })}
+              </TableBody>
+            </Table>
+          </Paper>
         </Grid>
       </Grid>
       
@@ -59,6 +105,7 @@ function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmit
    
   )
 }
+
 
 function formatDateTime(date) {
   let d = new Date(date)
