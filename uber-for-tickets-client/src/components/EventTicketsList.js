@@ -43,9 +43,12 @@ function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmit
             <Typography>No tickets offered yet for this event</Typography>
           </Grid>
           }
-        {list.length > 0 &&
           <Grid item>
             {(addMode === true && <TicketForm onChangeFn={onChangeFn} onSubmitFn={onSubmitFn} values={values}/>)}
+          </Grid>
+        {list.length > 0 &&
+          <Grid item>
+            
             <Typography variant="headline">Tickets offered for this event</Typography>
             <Paper>
             <ListPagination count={count} next={next} previous={previous}/>
