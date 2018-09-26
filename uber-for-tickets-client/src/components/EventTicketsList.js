@@ -53,16 +53,16 @@ function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmit
                   }
                   <TableCell></TableCell>
                   <TableCell style={{width: '100px'}}>
-                    <Tooltip title="Sort"><TableSortLabel onClick="sorthandler">Seller name</TableSortLabel></Tooltip>
+                    <Tooltip title="Sort"><TableSortLabel>Seller name</TableSortLabel></Tooltip>
                   </TableCell>
                   <TableCell>
                     <Tooltip title="Sort"><TableSortLabel onClick={() => history.push('?orderBy=price&direction=DESC')}>Price</TableSortLabel></Tooltip>
                   </TableCell>
                   <TableCell>
-                    <Tooltip title="Sort"><TableSortLabel onClick="sorthandler">Description</TableSortLabel></Tooltip>
+                    <Tooltip title="Sort"><TableSortLabel>Description</TableSortLabel></Tooltip>
                   </TableCell> 
                   <TableCell>
-                    <TableSortLabel onClick="sorthandler">Fraud risk</TableSortLabel>
+                    <TableSortLabel>Fraud risk</TableSortLabel>
                   </TableCell>                                                      
                 </TableRow>
               </TableHead>
