@@ -32,11 +32,11 @@ export default class EventController {
     @QueryParam('page') page: number
   ) {
 
-    const allowedColumnOrder = ['id','name', 'desc', 'location', 'imageUrl', 'dateCreated', 'startDate', 'endDate']
-    const allowedDirection = ['ASC', 'DESC']
+    // const allowedColumnOrder = ['id','name', 'desc', 'location', 'imageUrl', 'dateCreated', 'startDate', 'endDate']
+    // const allowedDirection = ['ASC', 'DESC']
 
-    if (!orderBy || (allowedColumnOrder.includes(orderBy) === false) ) orderBy = 'startDate'
-    if (!direction || (allowedDirection.includes(direction) === false)) direction = 'ASC'
+    if (!orderBy) orderBy = 'startDate'
+    if (!direction) direction = 'ASC'
     
     let dateNow = new Date()
     if (showAll === true) dateNow = new Date('1970-01-01T00:00:00')
