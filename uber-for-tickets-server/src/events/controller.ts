@@ -2,6 +2,7 @@ import {JsonController, Get, Post, Put, HttpCode, BodyParam, Param, NotFoundErro
 import {pageLimitEvents} from '../constants'
 import {Event} from './entity'
 import User from '../users/entity'
+import {Ticket} from '../tickets/entity'
 import { MoreThan} from 'typeorm'
 
 @JsonController()
@@ -106,9 +107,11 @@ export default class EventController {
 
     const event = await Event.findOne(eventId)
     if (!event) throw new BadRequestError(`Event does not exist`)
+    const eventTickets = await Ticket.find({where: {event}})
+    // console.log(eventTickets)
+    await Ticket.remove(eventTickets)
+    
     event.remove()
-    // test
-
-      return event
+    return event
     }
 }
