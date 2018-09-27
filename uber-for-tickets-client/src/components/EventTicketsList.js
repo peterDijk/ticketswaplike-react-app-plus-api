@@ -21,7 +21,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Tooltip from '@material-ui/core/Tooltip';
 
 
-function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmitFn, addMode, values, classes, history, isAdmin, deleteTicketFn, sortHandler}) {
+function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmitFn, addMode, values, classes, history, isAdmin, deleteTicketFn, sortHandler, userId}) {
   const {count, next, previous, range, list, event} = tickets
   return (
     <div>
@@ -36,7 +36,7 @@ function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmit
                     <Typography variant="display1">{event.name}</Typography>
                   </Grid>
                   <Grid item label="image">
-                    <img src={event.imageUrl} style={{width: '50vw'}} alt=""/>
+                    <img src={event.imageUrl} style={{width: '40vw'}} alt=""/>
                   </Grid>
                 </Grid>
               </Grid>
@@ -73,10 +73,11 @@ function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmit
                 <Table className={classes.table} aria-labelledby="tableTitle">
                   <TableHead>
                     <TableRow>
-                      {isAdmin === true &&
                       <TableCell></TableCell>
-                      }
+                      {/* {isAdmin === true &&
                       <TableCell></TableCell>
+                      } */}
+                      {/* <TableCell></TableCell> */}
                       <TableCell style={{width: '100px'}}>
                         <Tooltip title="Sort"><TableSortLabel>Seller name</TableSortLabel></Tooltip>
                       </TableCell>
@@ -95,8 +96,9 @@ function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmit
                     {list.map(ticket => {
                       return (
                         <TableRow hover key={ticket.id}>
-                          {isAdmin === true && <TableCell><IconButton aria-label="Delete" onClick={() => deleteTicketFn(ticket.id)}><DeleteIcon/></IconButton></TableCell>}
-                          <TableCell><Button variant="outlined" onClick={() => history.push(`/tickets/${ticket.id}`)}>Details</Button></TableCell>
+                          <TableCell>
+                          {(isAdmin === true || ticket.user.id === userId) && <IconButton aria-label="Delete" onClick={() => deleteTicketFn(ticket.id)} style={{display: 'inline'}}><DeleteIcon/></IconButton>}
+                          <Button style={{display: 'inline'}} variant="outlined" onClick={() => history.push(`/tickets/${ticket.id}`)}>Details</Button></TableCell>
                           <TableCell style={{width: '80px'}}>{ticket.user.firstName} {ticket.user.lastName}</TableCell>
                           <TableCell>{ticket.price}</TableCell>
                           <TableCell style={{width: '250px'}}>{ticket.desc}</TableCell>
