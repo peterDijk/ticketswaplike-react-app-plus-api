@@ -23,7 +23,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Tooltip from '@material-ui/core/Tooltip';
 
 
-function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmitFn, addMode, values, classes, history, isAdmin, deleteTicketFn}) {
+function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmitFn, addMode, values, classes, history, isAdmin, deleteTicketFn, sortHandler}) {
   const {count, next, previous, range, list, event} = tickets
   return (
     <div>
@@ -44,8 +44,8 @@ function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmit
               </Grid>
               <Grid item label="right" style={{borderLeftWidth: 1, borderLeftColor: '#dbdbdb', borderLeftStyle: 'solid'}}>
                 <Grid container direction="column" justify="center">
-                  <Grid item label="info">
-                    <Typography>Description: {event.desc}</Typography>
+                  <Grid item label="info" style={{width: '30vw'}}>
+                    <Typography style={{marginBottom: 20}}>Description: {event.desc}</Typography>
                     <Typography>Starts: {formatDateTime(event.startDate)}</Typography>
                     <Typography>Ends: {formatDateTime(event.endDate)}</Typography>
                     <Typography variant="caption">Location: {(event.location)?event.location:'unknown'}</Typography>
@@ -83,10 +83,10 @@ function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmit
                         <Tooltip title="Sort"><TableSortLabel>Seller name</TableSortLabel></Tooltip>
                       </TableCell>
                       <TableCell>
-                        <Tooltip title="Sort"><TableSortLabel onClick={() => history.push('?orderBy=price&direction=DESC')}>Price</TableSortLabel></Tooltip>
+                        <Tooltip title="Sort"><TableSortLabel onClick={() => sortHandler('price')}>Price</TableSortLabel></Tooltip>
                       </TableCell>
                       <TableCell>
-                        <Tooltip title="Sort"><TableSortLabel>Description</TableSortLabel></Tooltip>
+                        <Tooltip title="Sort"><TableSortLabel onClick={() => sortHandler('desc')}>Description</TableSortLabel></Tooltip>
                       </TableCell> 
                       <TableCell>
                         <TableSortLabel>Fraud risk</TableSortLabel>

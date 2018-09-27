@@ -1,5 +1,7 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
+import {withRouter} from 'react-router'
+import {Redirect} from 'react-router-dom'
 import queryString from 'query-string'
 import EventTicketsList from './EventTicketsList'
 import {userId} from '../jwt'
@@ -63,6 +65,21 @@ class EventsTicketsListContainer extends React.PureComponent {
     this.props.loadTickets(eventId, `page=${values.page}`, `orderBy=${values.orderBy}`, `direction=${values.direction}`)
   }
 
+  sortHandler = (column) => {
+    const values = queryString.parse(this.props.location.search)
+    if (!values.page) values.page = 1
+    if (!values.orderBy) values.orderBy = 'dateCreated'
+    if (!values.direction) values.direction = 'DESC'
+    if (values.direction === 'DESC') {
+      values.direction = 'ASC'
+      // console.log(values.direction)
+    }
+    if (values.direction === 'ASC') values.direction = 'DESC'
+    values.orderBy = column
+    this.props.history.push(`?page=${values.page}&orderBy=${values.orderBy}&direction=${values.direction}`)
+    // console.log(this.props.history)
+  }
+
   render() {
     const {tickets} = this.props
     if (!tickets.list) return 'Loading tickets...'
@@ -78,6 +95,7 @@ class EventsTicketsListContainer extends React.PureComponent {
         values={this.state.formValues}
         userId={this.props.userId}
         deleteTicketFn={this.props.deleteTicket}
+        sortHandler={this.sortHandler}
         /> 
     )
   }
@@ -98,4 +116,4 @@ const mapDispatchtoProps = {
   deleteTicket
 }
 
-export default connect(mapStateToProps, mapDispatchtoProps)(EventsTicketsListContainer)
+export default withRouter(connect(mapStateToProps, mapDispatchtoProps)(EventsTicketsListContainer))

@@ -17,7 +17,7 @@ function EventForm(props) {
                 name="name"
                 label="Name"
                 className={classes.textField}
-                value={props.values.name}
+                value={props.values.name || ''}
                 onChange={props.onChangeFn}
                 margin="normal"
                 required={true}
@@ -29,7 +29,7 @@ function EventForm(props) {
                   name="desc"
                   label="Description"
                   className={classes.textField}
-                  value={props.values.desc}
+                  value={props.values.desc || ''}
                   onChange={props.onChangeFn}
                   margin="normal"
                   multiline={true}
@@ -42,7 +42,7 @@ function EventForm(props) {
                 name="imageUrl"
                 label="Image URL"
                 className={classes.textField}
-                value={props.values.imageUrl}
+                value={props.values.imageUrl || ''}
                 onChange={props.onChangeFn}
                 margin="normal"
                 required={true}
@@ -56,7 +56,7 @@ function EventForm(props) {
                 name="location"
                 label="Location"
                 className={classes.textField}
-                value={props.values.location}
+                value={props.values.location || ''}
                 onChange={props.onChangeFn}
                 margin="normal"
                 required={false}
@@ -68,7 +68,7 @@ function EventForm(props) {
               label="Start date"
               type="datetime-local"
               className={classes.dateField}
-              value={props.values.startDate}
+              value={props.values.startDate || ''}
               onChange={props.onChangeFn}
               margin="normal"
               required={true}
@@ -82,7 +82,7 @@ function EventForm(props) {
               label="End date"
               type="datetime-local"
               className={classes.dateField}
-              value={props.values.endDate}
+              value={props.values.endDate || ''}
               onChange={props.onChangeFn}
               margin="normal"
               required={true}
