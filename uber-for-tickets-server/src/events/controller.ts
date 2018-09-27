@@ -13,12 +13,13 @@ export default class EventController {
   async createEvent(
     @BodyParam("name") name: string,
     @BodyParam("desc") desc: string,
+    @BodyParam("location") location: string,
     @BodyParam("imageUrl") imageUrl: string,
     @BodyParam("startDate") startDate: Date,
     @BodyParam("endDate") endDate: Date,
     @CurrentUser() user: User
   ) {
-    const newEvent = await Event.create({name, desc, imageUrl, startDate, endDate, user})
+    const newEvent = await Event.create({name, desc, location, imageUrl, startDate, endDate, user})
     return newEvent.save()
   }
 
@@ -30,7 +31,7 @@ export default class EventController {
     @QueryParam('page') page: number
   ) {
 
-    const allowedColumnOrder = ['id','name', 'desc', 'imageUrl', 'dateCreated', 'startDate', 'endDate']
+    const allowedColumnOrder = ['id','name', 'desc', 'location', 'imageUrl', 'dateCreated', 'startDate', 'endDate']
     const allowedDirection = ['ASC', 'DESC']
 
     if (!orderBy || (allowedColumnOrder.includes(orderBy) === false) ) orderBy = 'startDate'
@@ -74,6 +75,7 @@ export default class EventController {
     @CurrentUser() currentUser: User,
     @BodyParam("name") name: string,
     @BodyParam("desc") desc: string,
+    @BodyParam("location") location: string,
     @BodyParam("imageUrl") imageUrl: string,
     @BodyParam("startDate") startDate: Date,
     @BodyParam("endDate") endDate: Date,
@@ -85,7 +87,7 @@ export default class EventController {
       throw new BadRequestError(`Only admin can edit event`)
     } 
     if (currentUser.isAdmin === true) {
-      return Event.merge(event, {name, desc, imageUrl, startDate, endDate}).save()
+      return Event.merge(event, {name, desc,location, imageUrl, startDate, endDate}).save()
     }    
   }
 

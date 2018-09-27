@@ -17,6 +17,9 @@ export class Event extends BaseEntity {
   desc: string
 
   @Column('text', {nullable: true})
+  location: string
+
+  @Column('text', {nullable: true})
   imageUrl: string
 
   @Column('timestamptz', {nullable: false})
