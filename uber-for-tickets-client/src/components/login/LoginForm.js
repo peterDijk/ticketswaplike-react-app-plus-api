@@ -31,6 +31,7 @@ export default class LoginForm extends PureComponent {
 						value={this.state.email || ''}
 						onChange={this.handleChange}
 						style={{display: 'block'}}
+						autoFocus={true}
 					/>
 
 					<TextField
