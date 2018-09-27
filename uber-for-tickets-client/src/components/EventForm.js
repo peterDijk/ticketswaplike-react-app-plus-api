@@ -8,80 +8,84 @@ import Button from '@material-ui/core/Button'
 function EventForm(props) {
   const { classes } = props
   return (
+    <form onSubmit={props.onSubmitFn}>
     <Grid container spacing={16} direction="row" justify="center" alignItems="center">
-      <Grid item>
-        <form onSubmit={props.onSubmitFn}>
-          <Grid container spacing={16} direction="row" justify="center" alignItems="center">
+      <Grid item label="left">
+          <Grid container spacing={16} direction="column" justify="center" alignItems="center">
+            <Grid item>
+              <TextField
+                name="name"
+                label="Name"
+                className={classes.textField}
+                value={props.values.name}
+                onChange={props.onChangeFn}
+                margin="normal"
+                required={true}
+              />
+            </Grid>          
             <Grid item>
                 <TextField
-                  name="name"
-                  label="Name"
+                  name="desc"
+                  label="Description"
                   className={classes.textField}
-                  value={props.values.name}
+                  value={props.values.desc}
                   onChange={props.onChangeFn}
                   margin="normal"
+                  multiline={true}
+                  rows="3"
                   required={true}
                 />
-              </Grid>          
-              <Grid item>
-                  <TextField
-                    name="desc"
-                    label="Description"
-                    className={classes.textField}
-                    value={props.values.desc}
-                    onChange={props.onChangeFn}
-                    margin="normal"
-                    multiline={true}
-                    rows="2"
-                    required={true}
-                  />
-              </Grid>
-              <Grid item>
-                <TextField
-                  name="imageUrl"
-                  label="Image URL"
-                  className={classes.textField}
-                  value={props.values.imageUrl}
-                  onChange={props.onChangeFn}
-                  margin="normal"
-                  required={true}
-                />
-              </Grid>              
-              <Grid item>
-                <TextField
-                  name="startDate"
-                  label="Start date"
-                  type="datetime-local"
-                  className={classes.textField}
-                  value={props.values.startDate}
-                  onChange={props.onChangeFn}
-                  margin="normal"
-                  required={true}
-                  InputLabelProps={{shrink: true}}
-                />
-                {props.values.startDate}
-              </Grid>
-              <Grid item>
-                <TextField
-                  name="endDate"
-                  label="End date"
-                  type="datetime-local"
-                  className={classes.textField}
-                  value={props.values.endDate}
-                  onChange={props.onChangeFn}
-                  margin="normal"
-                  required={true}
-                  InputLabelProps={{shrink: true}}
-                />
-                
-              </Grid>            
-              <Grid item>
-                <Button type="submit">{(props.editTicketMode === true) ? 'Edit event' : 'Add event'}</Button>
-              </Grid>
+            </Grid>
+            <Grid item>
+              <TextField
+                name="imageUrl"
+                label="Image URL"
+                className={classes.textField}
+                value={props.values.imageUrl}
+                onChange={props.onChangeFn}
+                margin="normal"
+                required={true}
+              />
+            </Grid>
           </Grid>
-        </form>
+      </Grid>
+      <Grid item label="right">   
+        <Grid container spacing={16} direction="column" justify="center" alignItems="center">               
+          <Grid item>
+            <TextField
+              name="startDate"
+              label="Start date"
+              type="datetime-local"
+              className={classes.dateField}
+              value={props.values.startDate}
+              onChange={props.onChangeFn}
+              margin="normal"
+              required={true}
+              InputLabelProps={{shrink: true}}
+            />
+            
+          </Grid>
+          <Grid item>
+            <TextField
+              name="endDate"
+              label="End date"
+              type="datetime-local"
+              className={classes.dateField}
+              value={props.values.endDate}
+              onChange={props.onChangeFn}
+              margin="normal"
+              required={true}
+              InputLabelProps={{shrink: true}}
+            />
+            
+          </Grid>            
+          <Grid item>
+            <Button type="submit" variant="outlined" color="primary">{(props.editTicketMode === true) ? 'Edit event' : 'Add event'}</Button>
+          </Grid>
+        </Grid>      
       </Grid>
     </Grid>
+    </form>
   )
 }
 
@@ -102,6 +106,9 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     width: 200,
+  },
+  dateField: {
+    width: 180
   }
 })
 
