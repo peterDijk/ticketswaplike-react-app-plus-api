@@ -2,7 +2,7 @@ import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, Timestamp, OneToMan
 import {Ticket} from '../tickets/entity'
 import User from '../users/entity'
 
-// import User from '../users/entity'
+// import User from '../users/entity"
 
 @Entity()
 export class Event extends BaseEntity {

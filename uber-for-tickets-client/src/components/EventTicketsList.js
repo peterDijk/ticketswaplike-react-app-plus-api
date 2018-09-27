@@ -33,20 +33,22 @@ function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmit
             <Grid container direction="row" justify="center" spacing={24}>
               <Grid item label="left">
                 <Grid container direction="column" justify="center">
-                  <Grid item label="title">
-                    <Typography variant="display3">{event.name}</Typography>
+                  <Grid item label="title" style={{width: '40vw'}}>
+                    <Typography>Event:</Typography>
+                    <Typography variant="display1">{event.name}</Typography>
                   </Grid>
                   <Grid item label="image">
-                    <img src={event.imageUrl} width={400} alt=""/>
+                    <img src={event.imageUrl} style={{width: '50vw'}} alt=""/>
                   </Grid>
                 </Grid>
               </Grid>
               <Grid item label="right" style={{borderLeftWidth: 1, borderLeftColor: '#dbdbdb', borderLeftStyle: 'solid'}}>
                 <Grid container direction="column" justify="center">
                   <Grid item label="info">
-                    <Typography variant="p">Description: {event.desc}</Typography>
+                    <Typography>Description: {event.desc}</Typography>
                     <Typography>Starts: {formatDateTime(event.startDate)}</Typography>
                     <Typography>Ends: {formatDateTime(event.endDate)}</Typography>
+                    <Typography variant="caption">Location: {(event.location)?event.location:'unknown'}</Typography>
                     {authenticated === true && <Button onClick={onAddFn}>Add ticket</Button>}
                   </Grid>
                 </Grid>        

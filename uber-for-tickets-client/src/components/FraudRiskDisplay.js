@@ -33,8 +33,8 @@ export default class FraudRiskDisplay extends React.PureComponent {
     if (fraudRisk >= 33 && fraudRisk <= 66) color = '#dddd00'//yellow
     if (fraudRisk > 66) color = '#ff0000'//red
     return (
-      <div style={{width: 50, height: 15, backgroundColor: color, padding: 4, textAlign: 'center'}}>
-        <Typography style={{marginBottom: 4}}>{fraudRisk}% </Typography>
+      <div style={{display: 'inline', width: 100, height: 15, backgroundColor: color, padding: 4, textAlign: 'center'}}>
+        <Typography style={{display: 'inline', marginBottom: 4}}>{fraudRisk}% </Typography>
       </div>
       
       )

@@ -2,9 +2,6 @@ import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
@@ -14,6 +11,7 @@ import CommentForm from './CommentForm'
 import TicketForm from './TicketForm'
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
+import {formatDateTime} from '../lib/formatDateTime'
 
 import {Link} from 'react-router-dom'
 
@@ -21,26 +19,40 @@ function TicketDetails({ticket, authenticated, userId, isAdmin, onAddFn, onChang
   const {comments} = ticket
   return (
     <Grid container direction="column" justify="center" spacing={24}>
-      <Grid item>
-        <Paper>
+      <Grid item label="event_info">
+        <Paper style={{marginTop: 10}}>
           <Grid container direction="row" justify="center" spacing={24}>
-            <Grid item>
-              <Typography variant="display3">Ticket for: {ticket.event.name}</Typography>
-              {/* <Typography variant="display1">{ticket.event.desc}</Typography> */}
-              <img src={ticket.event.imageUrl || `http://thechurchontheway.org/wp-content/uploads/2016/05/placeholder1.png`} width={400} alt=""/>
-              <Typography>starts: {formatDateTime(ticket.event.startDate)}</Typography>
-              <Typography>ends: {formatDateTime(ticket.event.endDate)}</Typography>
-              <Link to={`/events/${ticket.event.id}/tickets/`}><Button>Back to all tickets</Button></Link>
+            <Grid item label="left">
+              <Grid container direction="column" justify="center">
+                <Grid item label="title" style={{width: '20vw'}}>
+                  <Typography>Ticket for:</Typography>
+                  <Typography variant="display1">{ticket.event.name}</Typography>
+                </Grid>
+                <Grid item label="image">
+                  <img src={ticket.event.imageUrl} style={{width: '20vw'}} alt=""/>
+                </Grid>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Typography variant="headline">Price: {ticket.price}</Typography>
-              <Typography>Description: {ticket.desc}</Typography>
-              <Typography>Seller: {ticket.user.firstName} {ticket.user.lastName} ({ticket.user.email})</Typography>
-              <FraudRiskDisplay ticketId={ticket.id}/>
-              {userId && (userId === ticket.user.id || isAdmin === true) && <Button onClick={onEditTicketFn}>Edit ticket details</Button>}
-            </Grid>
-            <Grid item>
-              <img src={ticket.imageUrl} alt="" width="200"/>
+            <Grid item label="right" style={{borderLeftWidth: 1, borderLeftColor: '#dbdbdb', borderLeftStyle: 'solid'}}>
+              <Grid container direction="column" justify="center">
+                <Grid item label="info">
+                  <Typography>Event description: {ticket.event.desc}</Typography>
+                  <Typography>Starts: {formatDateTime(ticket.event.startDate)}</Typography>
+                  <Typography>Ends: {formatDateTime(ticket.event.endDate)}</Typography>
+                  <Typography variant="caption">Location: {(ticket.event.location)?ticket.event.location:'unknown'}</Typography>
+                  
+                </Grid>
+                <Grid item label="ticket_info">
+                  <Typography variant="headline">Price: {ticket.price}</Typography>
+                  <Typography>Description: {ticket.desc}</Typography>
+                  <Typography>Seller: {ticket.user.firstName} {ticket.user.lastName} ({ticket.user.email})</Typography>
+                  <Typography style={{display: 'inline'}}>Fraud risk: </Typography><FraudRiskDisplay ticketId={ticket.id}/>
+                  {userId && (userId === ticket.user.id || isAdmin === true) && <Button onClick={onEditTicketFn}>Edit ticket details</Button>}
+                </Grid>
+                <Grid item>
+                  <img src={ticket.imageUrl} alt="" width="200"/>
+                </Grid>
+              </Grid>        
             </Grid>
           </Grid>
         </Paper>
@@ -60,6 +72,7 @@ function TicketDetails({ticket, authenticated, userId, isAdmin, onAddFn, onChang
         {ticket.comments && ticket.comments.list.length > 0 && displayComments(comments.list, comments.count, comments.next, comments.previous, comments.range, isAdmin, deleteCommentFn, ticket.id)}
       </Grid>
     </Grid>
+
   )
 }
 
@@ -82,23 +95,6 @@ function displayComments(commentsList, count, next, previous, range, isAdmin, de
       })}
     </div>
   )
-}
-
-function formatDateTime(date) {
-  let d = new Date(date)
-  let month = '' + (d.getMonth() + 1)
-  let day = '' + d.getDate()
-  let year = d.getFullYear()
-  let hours = '' + d.getHours()
-  let minutes = '' + d.getMinutes()
-
-  if (hours.length < 2) hours = '0' + hours
-  if (minutes.length < 2) minutes = '0' + minutes
-
-  if (month.length < 2) month = '0' + month
-  if (day.length < 2) day = '0' + day
-
-  return `${year}-${month}-${day} ${hours}:${minutes}`
 }
 
 const styles = theme => ({
