@@ -1,5 +1,8 @@
 import React, {PureComponent} from 'react'
 import './LoginForm.css'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
+import Paper from '@material-ui/core/Paper'
 
 export default class LoginForm extends PureComponent {
 	state = {}
@@ -19,24 +22,28 @@ export default class LoginForm extends PureComponent {
 
 	render() {
 		return (
-      <div className="login-form">
+      <Paper className="login-form" style={{padding: 30}}>
   			<form onSubmit={this.handleSubmit}>
-  				<label>
-            Email
-            <input type="email" name="email" value={
-  						this.state.email || ''
-  					} onChange={ this.handleChange } />
-          </label>
+					<TextField
+						name="email"
+						type="email"
+						label="Email"
+						value={this.state.email || ''}
+						onChange={this.handleChange}
+						style={{display: 'block'}}
+					/>
 
-  				<label>
-            Password
-            <input type="password" name="password" value={
-  						this.state.password || ''
-  					} onChange={ this.handleChange } />
-          </label>
+					<TextField
+						name="password"
+						type="password"
+						label="Password"
+						value={this.state.password || ''}
+						onChange={ this.handleChange }
+						style={{display: 'block', marginBottom: 20}}
+					/>
 
-  				<button type="submit">Login</button>
+  				<Button variant="contained" color="secondary" type="submit">Login</Button>
   			</form>
-		  </div>)
+		  </Paper>)
 	}
 }

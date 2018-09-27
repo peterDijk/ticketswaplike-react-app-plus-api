@@ -84,7 +84,7 @@ class TopBar extends React.PureComponent {
           }
         </Toolbar>
         {this.state.loginMode === true &&
-          <LoginPage />
+          <div style={{backgroundColor: 'rgba(221, 221, 221, 0.3)',position: 'absolute', top: 75, right: 40}}><LoginPage /></div>
         }
       </AppBar>
     )

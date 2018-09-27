@@ -27,7 +27,7 @@ function EventsList({authenticated, isAdmin, formValues, events, classes, addMod
       <Typography variant="display1" style={{display: 'inline'}}>Available events</Typography>
       {authenticated === true && <Button onClick={onAddFn} variant="fab" color="secondary" aria-label="Add Event" style={{position: 'absolute', right: 40}}><AddIcon/></Button>}
       {addMode === true && <EventForm values={formValues} onAddFn={onAddFn} onChangeFn={onChangeFn} onSubmitFn={onSubmitFn} />}
-      {editMode === true && <EventForm values={formValues} onChangeFn={onChangeFn} onSubmitFn={onSubmitEditFn}/>}
+      {editMode === true && <EventForm values={formValues} onChangeFn={onChangeFn} onSubmitFn={onSubmitEditFn} editMode={editMode}/>}
       <ListPagination count={count} next={next} previous={previous} range={range}/>
 
       <Grid container direction="row" justify="center" alignContent="center" spacing={24}>

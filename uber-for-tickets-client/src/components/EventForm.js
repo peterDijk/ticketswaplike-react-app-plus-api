@@ -81,7 +81,7 @@ function EventForm(props) {
             
           </Grid>            
           <Grid item>
-            <Button type="submit" variant="outlined" color="primary">{(props.editTicketMode === true) ? 'Edit event' : 'Add event'}</Button>
+            <Button type="submit" variant="outlined" color="primary">{(props.editMode === true) ? 'Edit event' : 'Add event'}</Button>
           </Grid>
         </Grid>      
       </Grid>
@@ -109,7 +109,7 @@ const styles = theme => ({
     width: 200,
   },
   dateField: {
-    width: 180
+    width: 200
   }
 })
 
