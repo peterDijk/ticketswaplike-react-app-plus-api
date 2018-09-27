@@ -107,6 +107,7 @@ export default class EventController {
     const event = await Event.findOne(eventId)
     if (!event) throw new BadRequestError(`Event does not exist`)
     event.remove()
+    // test
 
       return event
     }
