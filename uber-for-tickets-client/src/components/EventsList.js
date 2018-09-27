@@ -20,13 +20,13 @@ import EditIcon from '@material-ui/icons/Edit'
 import {Link} from 'react-router-dom'
 
 function EventsList({authenticated, isAdmin, formValues, events, classes, addMode, onAddFn, onChangeFn, onSubmitFn, onEditFn, editMode, onSubmitEditFn, deleteEventFn }) {
-  const {list, count, next, previous} = events
+  const {list, count, next, previous, range} = events
   return (
     <div>
       {authenticated === true && <Button onClick={onAddFn}>Add event</Button>}
       {addMode === true && <EventForm values={formValues} onAddFn={onAddFn} onChangeFn={onChangeFn} onSubmitFn={onSubmitFn} />}
       {editMode === true && <EventForm values={formValues} onChangeFn={onChangeFn} onSubmitFn={onSubmitEditFn}/>}
-      <ListPagination count={count} next={next} previous={previous}/>
+      <ListPagination count={count} next={next} previous={previous} range={range}/>
 
       <Grid container direction="row" justify="center" spacing={24}>
         {list.map(event => (

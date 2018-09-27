@@ -44,6 +44,7 @@ export default class EventController {
     const totalPages = count / take
     let next
     let previous
+    let range = {first: skip+1, last: (skip+take > count)?count:skip+take}
 
     if (totalPages > page) next = `/events/?page=${page+1}`
     else next = null
@@ -51,7 +52,7 @@ export default class EventController {
     else previous = null
   
     const events = await Event.find({ order: { [orderBy]: direction }, skip, take, where: {endDate : MoreThan(dateNow)} })
-    return { count, next, previous ,events }
+    return { count, next, previous ,events, range }
   }
 
   @Get('/events/:id')

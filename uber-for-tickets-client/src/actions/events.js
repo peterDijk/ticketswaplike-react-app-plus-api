@@ -9,10 +9,10 @@ export const EVENT_ADD_SUCCESS = 'EVENT_ADD_SUCCESS'
 export const EVENT_EDIT_SUCCESS = 'EVENT_EDIT_SUCCESS'
 export const EVENT_DELETE_SUCCESS = 'EVENT_DELETE_SUCCESS'
 
-function eventsFetched({events, count, next, previous}) {
+function eventsFetched({events, count, next, previous, range}) {
   return {
     type: EVENTS_FETCHED,
-    payload: {list: events, count, next, previous}
+    payload: {list: events, count, next, previous, range}
   }
 }
 

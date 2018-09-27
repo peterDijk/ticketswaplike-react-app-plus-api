@@ -46,6 +46,7 @@ export default class TicketController {
     if (!page) page = 1
     const take = pageLimitTickets
     const skip = (page -1) * take
+    let range = {first: skip+1, last: (skip+take > count)?count:skip+take}
 
     if (!orderBy) orderBy = 'dateCreated'
     if (!direction) direction = 'DESC'
@@ -61,7 +62,7 @@ export default class TicketController {
     if (page > 1) previous = `/events/${eventId}/tickets/?page=${page-1}`
     else previous = null
 
-    return {count, next, previous, tickets, event}
+    return {count, next, previous, tickets, event, range}
   }
 
   @Get('/tickets/:ticketId')

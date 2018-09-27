@@ -9,10 +9,10 @@ export const TICKET_ADD_SUCCESS = 'TICKET_ADD_SUCCESS'
 export const TICKET_DELETE_SUCCESS = 'TICKET_DELETE_SUCCESS'
 
 
-function ticketsFetched({tickets, count, next, previous, event}) {
+function ticketsFetched({tickets, count, next, previous, event, range}) {
   return {
     type: TICKETS_FETCHED,
-    payload: {list: tickets, count, next, previous, event}
+    payload: {list: tickets, count, next, previous, range, event}
   }
 }
 

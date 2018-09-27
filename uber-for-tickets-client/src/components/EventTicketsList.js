@@ -23,7 +23,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 
 function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmitFn, addMode, values, classes, history, isAdmin, deleteTicketFn}) {
-  const {count, next, previous, list, event} = tickets
+  const {count, next, previous, range, list, event} = tickets
   return (
     <div>
       {/* <Link to="/create"><Button variant="contained">Place add</Button></Link> */}
@@ -51,7 +51,7 @@ function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmit
             
             <Typography variant="headline">Tickets offered for this event</Typography>
             <Paper>
-            <ListPagination count={count} next={next} previous={previous}/>
+            <ListPagination count={count} next={next} previous={previous} range={range}/>
               <Table className={classes.table} aria-labelledby="tableTitle">
                 <TableHead>
                   <TableRow>
