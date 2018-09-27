@@ -50,8 +50,8 @@ function TicketDetails({ticket, authenticated, userId, isAdmin, onAddFn, onChang
                   <Typography variant="headline">Price: {ticket.price}</Typography>
                   <Typography>Description: {ticket.desc}</Typography>
                   <Typography>Seller: {ticket.user.firstName} {ticket.user.lastName} ({ticket.user.email})</Typography>
-                  <Typography style={{display: 'inline'}}>Fraud risk: </Typography><FraudRiskDisplay ticketId={ticket.id}/>
-                  {userId && (userId === ticket.user.id || isAdmin === true) && <Button onClick={onEditTicketFn}>Edit ticket details</Button>}
+                  <Typography style={{display: 'inline'}}>We calculated that the risk of this ticket being a fraud is: </Typography><FraudRiskDisplay ticketId={ticket.id}/>
+                  {userId && (userId === ticket.user.id || isAdmin === true) && <Button onClick={onEditTicketFn} style={{display: 'block'}} variant="outlined">Edit ticket details</Button>}
                 </Grid>
                 <Grid item>
                   <img src={ticket.imageUrl} alt="" width="200"/>
