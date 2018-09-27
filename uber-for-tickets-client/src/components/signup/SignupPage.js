@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {signup} from '../../actions/users'
 import SignupForm from './SignupForm'
 import {Redirect} from 'react-router-dom'
+import Typography from '@material-ui/core/Typography'
 
 class SignupPage extends PureComponent {
 	handleSubmit = (data) => {
@@ -15,8 +16,8 @@ class SignupPage extends PureComponent {
 		)
 
 		return (
-			<div>
-				<h1>Sign up</h1>
+			<div style={{margin: 'auto', width: '40vw', position: 'relative', top: 100}}>
+				<Typography variant="headline" style={{marginBottom: 20}}>Sign up</Typography>
 
 				<SignupForm onSubmit={this.handleSubmit} />
 
