@@ -9,7 +9,7 @@ function EventForm(props) {
   const { classes } = props
   return (
     <form onSubmit={props.onSubmitFn}>
-    <Grid container spacing={16} direction="row" justify="center" alignItems="center">
+    <Grid container spacing={16} direction="row" justify="center" alignItems="flex-end">
       <Grid item label="left">
           <Grid container spacing={16} direction="column" justify="center" alignItems="center">
             <Grid item>
@@ -21,6 +21,7 @@ function EventForm(props) {
                 onChange={props.onChangeFn}
                 margin="normal"
                 required={true}
+                autoFocus={true}
               />
             </Grid>          
             <Grid item>

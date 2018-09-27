@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit'
+import AddIcon from '@material-ui/icons/Add'
 
 
 import {Link} from 'react-router-dom'
@@ -23,8 +24,8 @@ function EventsList({authenticated, isAdmin, formValues, events, classes, addMod
   const {list, count, next, previous, range} = events
   return (
     <div>
-      <Typography variant="display1">Available events</Typography>
-      {authenticated === true && <Button onClick={onAddFn}>Add event</Button>}
+      <Typography variant="display1" style={{display: 'inline'}}>Available events</Typography>
+      {authenticated === true && <Button onClick={onAddFn} variant="fab" color="secondary" aria-label="Add Event" style={{position: 'absolute', right: 40}}><AddIcon/></Button>}
       {addMode === true && <EventForm values={formValues} onAddFn={onAddFn} onChangeFn={onChangeFn} onSubmitFn={onSubmitFn} />}
       {editMode === true && <EventForm values={formValues} onChangeFn={onChangeFn} onSubmitFn={onSubmitEditFn}/>}
       <ListPagination count={count} next={next} previous={previous} range={range}/>
@@ -56,8 +57,8 @@ function EventsList({authenticated, isAdmin, formValues, events, classes, addMod
                 </Button></Link>
                 {isAdmin === true &&
                   <div>
-                    <IconButton aria-label="Edit" onClick={() => onEditFn(event.id)}><EditIcon/></IconButton>
-                    <IconButton aria-label="Delete" onClick={() => deleteEventFn(event.id)}><DeleteIcon/></IconButton>
+                    <IconButton color="primary" aria-label="Edit" onClick={() => onEditFn(event.id)}><EditIcon/></IconButton>
+                    <IconButton color="secondary" aria-label="Delete" onClick={() => deleteEventFn(event.id)}><DeleteIcon/></IconButton>
                   </div>
                 }
               </CardActions>
