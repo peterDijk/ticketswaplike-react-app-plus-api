@@ -74,10 +74,6 @@ function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmit
                   <TableHead>
                     <TableRow>
                       <TableCell></TableCell>
-                      {/* {isAdmin === true &&
-                      <TableCell></TableCell>
-                      } */}
-                      {/* <TableCell></TableCell> */}
                       <TableCell style={{width: '100px'}}>
                         <Tooltip title="Sort"><TableSortLabel>Seller name</TableSortLabel></Tooltip>
                       </TableCell>

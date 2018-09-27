@@ -8,6 +8,13 @@ import {
 export default (state = [], action = {}) => {
   switch (action.type) {
     case EVENTS_FETCHED:
+      const list = action.payload.list
+      const eventsListTicketCount = list.map(event => {
+        event = {...event, ticketsCount: event.tickets.length}
+        delete event.tickets
+        return event
+      })
+      action.payload.list = eventsListTicketCount
       return action.payload
     case EVENT_ADD_SUCCESS:
       return {

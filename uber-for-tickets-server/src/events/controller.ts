@@ -55,7 +55,7 @@ export default class EventController {
     if (page > 1) previous = `/events/?page=${page-1}`
     else previous = null
   
-    const events = await Event.find({ order: { [orderBy]: direction }, skip, take, where: {endDate : MoreThan(dateNow)} })
+    const events = await Event.find({ order: { [orderBy]: direction }, skip, take, where: {endDate : MoreThan(dateNow)}, relations: ['tickets'] })
     return { count, next, previous ,events, range }
   }
 

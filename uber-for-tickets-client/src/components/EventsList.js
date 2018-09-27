@@ -51,6 +51,7 @@ function EventsList({authenticated, isAdmin, formValues, events, classes, addMod
                     <Typography variant="caption" style={{marginTop: 6}}>Starts: {formatDateTime(event.startDate)}</Typography>
                     <Typography variant="caption">Ends: {formatDateTime(event.endDate)}</Typography>
                     <Typography variant="caption">Location: {(event.location)?event.location:'unknown'}</Typography>
+                    <Typography variant="caption" style={{marginTop: 8}}>Number of tickets offered: {event.ticketsCount}</Typography>
                   </CardContent>
                 </CardActionArea>
               </Link>
