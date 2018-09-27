@@ -48,8 +48,11 @@ export default class TicketController {
     const skip = (page -1) * take
     let range = {first: skip+1, last: (skip+take > count)?count:skip+take}
 
-    if (!orderBy) orderBy = 'dateCreated'
-    if (!direction) direction = 'DESC'
+    const allowedColumnOrder = ['id', 'desc', 'imageUrl', 'dateCreated', 'eventId', 'price']
+    const allowedDirection = ['ASC', 'DESC']
+
+    if (!orderBy || (allowedColumnOrder.includes(orderBy) === false) ) orderBy = 'dateCreated'
+    if (!direction || (allowedDirection.includes(direction) === false)) direction = 'DESC'
 
     const tickets = await Ticket.find({where: {event}, order: { [orderBy]: direction }, skip, take, relations: ['user']})
 
