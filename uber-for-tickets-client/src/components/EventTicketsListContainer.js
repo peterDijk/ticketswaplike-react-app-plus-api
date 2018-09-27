@@ -71,7 +71,7 @@ class EventsTicketsListContainer extends React.PureComponent {
     if (!values.direction) values.direction = 'DESC'
     if (values.direction === 'DESC') {
       values.direction = 'ASC'
-      // console.log(values.direction)
+      console.log(values.direction)
     }
     if (values.direction === 'ASC') values.direction = 'DESC'
     values.orderBy = column

@@ -22,12 +22,7 @@ class SignupPage extends PureComponent {
 				<SignupForm onSubmit={this.handleSubmit} />
 
 				<p style={{color:'red'}}>{ this.props.signup.error && this.props.signup.error.message}</p>
-				{this.props.signup.error && 
-				this.props.signup.error.errors.map(error => {
-					return (
-						Object.values(error.constraints).map(value => <p style={{color:'red'}}>{value}</p>)
-					)
-				})}
+				{/* {this.props.signup.error && this.props.signup.error.message} */}
 			</div>
 		)
 	}

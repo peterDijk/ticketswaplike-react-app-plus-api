@@ -70,7 +70,7 @@ export const signup = (firstName, lastName, email, password) => (dispatch) =>
 		.catch(err => {
 			if (err.status === 400) {
         
-				dispatch(userSignupFailed({message: err.response.body.message, errors: err.response.body.errors}))
+				dispatch(userSignupFailed({message: err.response.body.message}))
 			}
 			else {
 				console.error(err)
