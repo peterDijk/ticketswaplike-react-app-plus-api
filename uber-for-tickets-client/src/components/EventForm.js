@@ -59,6 +59,7 @@ function EventForm(props) {
                   required={true}
                   InputLabelProps={{shrink: true}}
                 />
+                {props.values.startDate}
               </Grid>
               <Grid item>
                 <TextField
@@ -72,6 +73,7 @@ function EventForm(props) {
                   required={true}
                   InputLabelProps={{shrink: true}}
                 />
+                
               </Grid>            
               <Grid item>
                 <Button type="submit">{(props.editTicketMode === true) ? 'Edit event' : 'Add event'}</Button>
@@ -99,7 +101,7 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 400,
+    width: 200,
   }
 })
 

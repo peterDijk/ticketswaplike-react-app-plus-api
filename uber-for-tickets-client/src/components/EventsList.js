@@ -23,12 +23,13 @@ function EventsList({authenticated, isAdmin, formValues, events, classes, addMod
   const {list, count, next, previous, range} = events
   return (
     <div>
+      <Typography variant="display1">Available events</Typography>
       {authenticated === true && <Button onClick={onAddFn}>Add event</Button>}
       {addMode === true && <EventForm values={formValues} onAddFn={onAddFn} onChangeFn={onChangeFn} onSubmitFn={onSubmitFn} />}
       {editMode === true && <EventForm values={formValues} onChangeFn={onChangeFn} onSubmitFn={onSubmitEditFn}/>}
       <ListPagination count={count} next={next} previous={previous} range={range}/>
 
-      <Grid container direction="row" justify="center" spacing={24}>
+      <Grid container direction="row" justify="center" alignContent="center" spacing={24}>
         {list.map(event => (
           <Grid key={event.id} item xs={12} sm={6} md={4} lg={3}>
             <Card className={classes.card}>
@@ -64,6 +65,7 @@ function EventsList({authenticated, isAdmin, formValues, events, classes, addMod
           </Grid>
         ))}  
       </Grid>
+      <ListPagination count={count} next={next} previous={previous} range={range}/>
    </div>
   )
 }

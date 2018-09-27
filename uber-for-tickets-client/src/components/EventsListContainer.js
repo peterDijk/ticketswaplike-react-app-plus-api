@@ -66,7 +66,10 @@ class EventsListContainer extends React.PureComponent {
 
   onChange = (event) => {
     // update the formValues property with the new data from the input field
-    console.log(event.target.value)
+    if (event.target.type === 'datetime-local' && event.target.value.split(':').length > 2) {
+      // fix for iOS where datetime field adds seconds and mUi component doesn't like that
+      event.target.value = event.target.value.slice(0, -3)
+    }
     this.setState({
       formValues: {
         ...this.state.formValues,

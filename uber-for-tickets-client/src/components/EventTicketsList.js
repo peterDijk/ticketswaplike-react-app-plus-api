@@ -32,7 +32,7 @@ function EventTicketsList({tickets, authenticated, onAddFn, onChangeFn, onSubmit
           <Paper>
             <Typography variant="display3">{event.name}</Typography>
             <Typography variant="display1">{event.desc}</Typography>
-            <img src={event.imageUrl || `http://thechurchontheway.org/wp-content/uploads/2016/05/placeholder1.png`} width={400} alt=""/>
+            <img src={event.imageUrl} width={400} alt=""/>
             <Typography>starts: {formatDateTime(event.startDate)}</Typography>
             <Typography>ends: {formatDateTime(event.endDate)}</Typography>
             {authenticated === true && <Button onClick={onAddFn}>Add ticket</Button>}
