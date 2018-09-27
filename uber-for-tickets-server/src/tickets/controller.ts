@@ -123,14 +123,29 @@ export default class TicketController {
   ) {
     const userResult = await User.findOne(user)
     if (!userResult) throw new BadRequestError(`User does not exist`)
-    if (userResult.isAdmin === false) {
-      throw new BadRequestError(`Only admins are allowed to delete tickets`)
+
+    const ticket = await Ticket.findOne(ticketId, {relations: ['user']})
+    if (!ticket) throw new BadRequestError(`Ticket does not exist`)
+    // ticket.remove()
+
+    if (userResult.isAdmin === true) {
+      ticket.remove()
+      return ticket
     }
 
-    const ticket = await Ticket.findOne(ticketId)
-    if (!ticket) throw new BadRequestError(`Ticket does not exist`)
-    ticket.remove()
+    if (ticket.user.id !== userResult.id) {
+      throw new BadRequestError(`Only author can delete ticket`)
+    }
 
+    ticket.remove()
     return ticket
+
+    // if (userResult.isAdmin === false) {
+    //   throw new BadRequestError(`Only admins are allowed to delete tickets`)
+    // }
+
+
+
+    // return ticket
   }
 }
