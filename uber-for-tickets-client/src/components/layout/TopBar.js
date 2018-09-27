@@ -56,7 +56,7 @@ class TopBar extends React.PureComponent {
             <Button color="inherit"> <AccountIcon />{ user.firstName } {user.lastName}</Button> //
           }
           {
-            this.props.isAdmin === true && '(role: administrator)'
+            this.props.isAdmin === true && <Typography style={{color:'white'}}>(admin)</Typography>
           }
 
           {/* {

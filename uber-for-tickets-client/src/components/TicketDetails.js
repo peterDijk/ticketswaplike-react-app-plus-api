@@ -30,6 +30,10 @@ function TicketDetails({ticket, authenticated, userId, isAdmin, onAddFn, onChang
                 </Grid>
                 <Grid item label="image">
                   <img src={ticket.event.imageUrl} style={{width: '20vw'}} alt=""/>
+                  
+                </Grid>
+                <Grid item>
+                  <Link to={`/events/${ticket.event.id}/tickets/`}><Button variant="outlined">Back to all tickets</Button></Link>
                 </Grid>
               </Grid>
             </Grid>
