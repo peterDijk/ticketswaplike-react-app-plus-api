@@ -22,6 +22,7 @@ function TicketForm(props) {
                   multiline={true}
                   rows="2"
                   required={true}
+                  autoFocus={true}
                 />
             </Grid>
             <Grid item>
@@ -74,7 +75,7 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 400,
+    width: 250,
   }
 })
 

@@ -22,6 +22,7 @@ function CommentForm(props) {
                   multiline={true}
                   rows="2"
                   required={true}
+                  autoFocus={true}
                 />
             </Grid>          
             <Grid item>
