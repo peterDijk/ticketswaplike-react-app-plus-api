@@ -41,6 +41,7 @@ export default class CommentController {
     if (!page) page = 1
     const take = pageLimitComments
     const skip = (page -1) * take
+    let range = {first: skip+1, last: (skip+take > count)?count:skip+take}
 
     if (!orderBy) orderBy = 'dateCreated'
     if (!direction) direction = 'DESC'
@@ -56,7 +57,7 @@ export default class CommentController {
     if (page > 1) previous = `/tickets/${ticketId}/?page=${page-1}`
     else previous = null
 
-    return {count, next, previous, comments, ticket}
+    return {count, next, previous, range, comments, ticket}
   }
 
   @Authorized()

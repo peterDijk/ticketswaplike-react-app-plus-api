@@ -57,17 +57,17 @@ function TicketDetails({ticket, authenticated, userId, isAdmin, onAddFn, onChang
       <Grid item>
         {ticket.comments && ticket.comments.list.length === 0 && <Typography>no comments yet...</Typography>}
         
-        {ticket.comments && ticket.comments.list.length > 0 && displayComments(comments.list, comments.count, comments.next, comments.previous, isAdmin, deleteCommentFn, ticket.id)}
+        {ticket.comments && ticket.comments.list.length > 0 && displayComments(comments.list, comments.count, comments.next, comments.previous, comments.range, isAdmin, deleteCommentFn, ticket.id)}
       </Grid>
     </Grid>
   )
 }
 
-function displayComments(commentsList, count, next, previous, isAdmin, deleteCommentFn, ticketId) {
+function displayComments(commentsList, count, next, previous, range, isAdmin, deleteCommentFn, ticketId) {
   return (
     <div>
       
-      <ListPagination count={count} next={next} previous={previous}/>
+      <ListPagination count={count} next={next} previous={previous} range={range}/>
       <Typography variant="subheading">Comments:</Typography>
       {commentsList.map(comment => {
         return (

@@ -18,10 +18,10 @@ function ticketLoaded(ticket) {
   }
 }
 
-function commentsLoaded({comments, count, next, previous}) {
+function commentsLoaded({comments, count, next, previous, range}) {
   return {
     type: COMMENTS_LOADED,
-    payload: {list: comments, count, next, previous}
+    payload: {list: comments, count, next, previous, range}
   }
 }
 
