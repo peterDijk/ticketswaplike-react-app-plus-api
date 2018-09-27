@@ -37,11 +37,6 @@ const userSignupSuccess = () => ({
   type: USER_SIGNUP_SUCCESS
 })
 
-const updateUsers = (users) => ({
-  type: UPDATE_USERS,
-  payload: users
-})
-
 const updateUser = (user) => ({
   type: UPDATE_USER,
   payload: user

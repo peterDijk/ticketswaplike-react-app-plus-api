@@ -44,7 +44,7 @@ class TopBar extends React.PureComponent {
   }
 
   render() {
-    const { location, history, user } = this.props
+    const { user } = this.props
     return (
       <AppBar position="absolute" style={{zIndex:10}}>
         <Toolbar>
@@ -59,10 +59,6 @@ class TopBar extends React.PureComponent {
             this.props.isAdmin === true && <Typography style={{color:'white'}}>(admin)</Typography>
           }
 
-          {/* {
-            !this.props.authenticated &&
-            <Link to="/login"><Button color="inherit">Login</Button></Link>
-          } */}
           {
             !this.props.authenticated &&
             <Button color="inherit" onClick={this.onLoginClick}>Login</Button>
@@ -74,10 +70,7 @@ class TopBar extends React.PureComponent {
           {
             <Link to="/events"><Button color="inherit">All Events</Button></Link>
           }
-          {/* {
-            this.props.authenticated &&
-            <Button color="inherit"><Link to="/">Add ticket</Link></Button>
-          } */}
+
           {
             this.props.authenticated &&
             <Button color="inherit" onClick={() => this.props.logout()}>Log out</Button>

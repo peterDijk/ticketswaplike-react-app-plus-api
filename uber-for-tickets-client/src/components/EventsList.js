@@ -1,5 +1,4 @@
 import React from 'react'
-import {Redirect} from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
 import ListPagination from './ListPagination'
 import EventForm from './EventForm'

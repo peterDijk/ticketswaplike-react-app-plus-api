@@ -10,7 +10,6 @@ class LogoutPage extends PureComponent {
 	}
 
 	render() {
-		const {history} = this.props
 		if (!this.props.currentUser) {
 			return (
 				<Redirect to="/" />

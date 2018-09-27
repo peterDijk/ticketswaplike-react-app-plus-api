@@ -1,7 +1,6 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router'
-import {Redirect} from 'react-router-dom'
 import queryString from 'query-string'
 import EventTicketsList from './EventTicketsList'
 import {userId} from '../jwt'

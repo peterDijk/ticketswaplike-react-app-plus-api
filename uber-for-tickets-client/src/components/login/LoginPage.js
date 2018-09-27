@@ -2,7 +2,6 @@ import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import {login} from '../../actions/users'
 import LoginForm from './LoginForm'
-import {Redirect} from 'react-router-dom'
 import {withRouter} from 'react-router'
 
 class LoginPage extends PureComponent {
@@ -11,14 +10,6 @@ class LoginPage extends PureComponent {
 	}
 
 	render() {
-		const {location, history} = this.props
-		// if (this.props.currentUser) {
-		// 		return (
-		// 		<Redirect to="/" />
-		// 	)
-		// 	// console.log(history)
-		// 	// history.goBack()
-		// }
 
 		return (
 			<div>
