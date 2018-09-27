@@ -43,11 +43,11 @@ export default class CommentController {
     const skip = (page -1) * take
     let range = {first: skip+1, last: (skip+take > count)?count:skip+take}
 
-    const allowedColumnOrder = ['comment', 'dateCreated']
-    const allowedDirection = ['ASC', 'DESC']
+    // const allowedColumnOrder = ['comment', 'dateCreated']
+    // const allowedDirection = ['ASC', 'DESC']
 
-    if (!orderBy || (allowedColumnOrder.includes(orderBy) === false) ) orderBy = 'dateCreated'
-    if (!direction || (allowedDirection.includes(direction) === false)) direction = 'DESC'
+    if (!orderBy) orderBy = 'dateCreated'
+    if (!direction) direction = 'DESC'
 
     const comments = await Comment.find({where: {ticket}, order: { [orderBy]: direction }, skip, take, relations: ['user']})
 
