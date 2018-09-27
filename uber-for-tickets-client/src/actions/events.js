@@ -51,7 +51,7 @@ export function loadEvents(pagination, orderBy, direction) {
 }
 
 export const addEvent = (formValues) => (dispatch, getState) => {
-  const {name, desc, imageUrl, startDate, endDate} = formValues
+  const {name, desc, location, imageUrl, startDate, endDate} = formValues
   const state = getState()
   if (!state.currentUser) return null
   const jwt = state.currentUser.jwt
@@ -61,13 +61,13 @@ export const addEvent = (formValues) => (dispatch, getState) => {
   request
     .post(`${apiUrl}/events`)
     .set('Authorization', `Bearer ${jwt}`)
-    .send({name, desc, imageUrl, startDate, endDate})
+    .send({name, desc, location, imageUrl, startDate, endDate})
     .then(result => dispatch(eventAddSuccess(result.body)))
     .catch(err => console.error(err))
 }
 
 export const editEvent = (eventId, formValues) => (dispatch, getState) => {
-  const {name, desc, imageUrl, startDate, endDate} = formValues
+  const {name, desc, location, imageUrl, startDate, endDate} = formValues
   const state = getState()
   if (!state.currentUser) return null
   const jwt = state.currentUser.jwt
@@ -77,7 +77,7 @@ export const editEvent = (eventId, formValues) => (dispatch, getState) => {
   request
     .put(`${apiUrl}/events/${eventId}`)
     .set('Authorization', `Bearer ${jwt}`)
-    .send({name, desc, imageUrl, startDate, endDate})
+    .send({name, desc, location, imageUrl, startDate, endDate})
     .then(result => dispatch(eventEditSuccess(result.body)))
     .catch(err => console.error(err))
 }

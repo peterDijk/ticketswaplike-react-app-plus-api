@@ -51,7 +51,17 @@ function EventForm(props) {
           </Grid>
       </Grid>
       <Grid item label="right">   
-        <Grid container spacing={16} direction="column" justify="center" alignItems="center">               
+        <Grid container spacing={16} direction="column" justify="center" alignItems="center">           <Grid item>
+              <TextField
+                name="location"
+                label="Location"
+                className={classes.textField}
+                value={props.values.location}
+                onChange={props.onChangeFn}
+                margin="normal"
+                required={false}
+              />
+            </Grid>        
           <Grid item>
             <TextField
               name="startDate"
