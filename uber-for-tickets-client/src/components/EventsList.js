@@ -3,6 +3,7 @@ import {Redirect} from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
 import ListPagination from './ListPagination'
 import EventForm from './EventForm'
+import {formatDateTime} from '../lib/formatDateTime'
 
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card';
@@ -48,6 +49,8 @@ function EventsList({authenticated, isAdmin, formValues, events, classes, addMod
                     <Typography component="p">
                       {event.desc}
                     </Typography>
+                    <Typography variant="caption" style={{marginTop: 6}}>Starts: {formatDateTime(event.startDate)}</Typography>
+                    <Typography variant="caption">Ends: {formatDateTime(event.endDate)}</Typography>
                   </CardContent>
                 </CardActionArea>
               </Link>
