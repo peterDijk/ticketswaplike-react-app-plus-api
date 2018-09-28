@@ -1,4 +1,4 @@
-import { JsonController, Post, Param, Get, Body, Authorized, BadRequestError } from 'routing-controllers'
+import { JsonController, Post, Param, Get, Body, Authorized, BadRequestError, BodyParam } from 'routing-controllers'
 import User from './entity';
 // import { io } from '../index'
 
@@ -7,6 +7,10 @@ export default class UserController {
 
   @Post('/users')
   async signup(
+    @BodyParam('firstName') firstName: string,
+    @BodyParam('lastName') lastName: string,
+    @BodyParam('email') email: string,
+
     @Body() data: User
   ) {
 
@@ -15,8 +19,8 @@ export default class UserController {
       throw new BadRequestError('User with that emailaddress already exists')
     }
 
-    const {password, ...rest} = data
-    const entity = User.create(rest)
+    const {password} = data
+    const entity = User.create({firstName, lastName, email})
     await entity.setPassword(password)
 
     const user = await entity.save()
