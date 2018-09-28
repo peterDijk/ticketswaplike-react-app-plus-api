@@ -1,7 +1,6 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
 import queryString from 'query-string'
-// import {userId} from '../jwt'
 import {isAdmin} from '../jwt'
 import EventsList from './EventsList'
 import {formatDateTimeForPicker} from '../lib/formatDateTime'
@@ -52,10 +51,10 @@ class EventsListContainer extends React.PureComponent {
 
   onChange = (event) => {
     // update the formValues property with the new data from the input field
-    if (event.target.type === 'datetime-local' && event.target.value.split(':').length > 2) {
-      // fix for iOS where datetime field adds seconds and mUi component doesn't like that
-      event.target.value = event.target.value.slice(0, -3)
-    }
+    // if (event.target.type === 'datetime-local' && event.target.value.split(':').length > 2) {
+    //   // fix for iOS where datetime field adds seconds and mUi component doesn't like that
+    //   event.target.value = event.target.value.replace(',', '.')
+    // }
     this.setState({
       formValues: {
         ...this.state.formValues,

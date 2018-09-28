@@ -46,7 +46,7 @@ function EventsList({authenticated, isAdmin, formValues, events, classes, addMod
                       {event.name}
                     </Typography>
                     <Typography component="p">
-                      {event.desc}
+                      {`${event.desc.substring(0,200)} (...)`}
                     </Typography>
                     <Typography variant="caption" style={{marginTop: 6}}>Starts: {formatDateTime(event.startDate)}</Typography>
                     <Typography variant="caption">Ends: {formatDateTime(event.endDate)}</Typography>
