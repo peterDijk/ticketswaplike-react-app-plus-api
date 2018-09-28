@@ -39,7 +39,7 @@ function TicketDetails({ticket, authenticated, userId, isAdmin, onAddFn, onChang
             </Grid>
             <Grid item label="right" style={{borderLeftWidth: 1, borderLeftColor: '#dbdbdb', borderLeftStyle: 'solid'}}>
               <Grid container direction="column" justify="center">
-                <Grid item label="info">
+                <Grid item label="info" style={{width: '30vw'}}>
                   <Typography>Event description: {ticket.event.desc}</Typography>
                   <Typography>Starts: {formatDateTime(ticket.event.startDate)}</Typography>
                   <Typography>Ends: {formatDateTime(ticket.event.endDate)}</Typography>
