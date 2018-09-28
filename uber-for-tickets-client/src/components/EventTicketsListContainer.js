@@ -29,6 +29,7 @@ class EventsTicketsListContainer extends React.PureComponent {
 
   onChange = (event) => {
     // update the formValues property with the new data from the input field
+    
     this.setState({
       formValues: {
         ...this.state.formValues,
