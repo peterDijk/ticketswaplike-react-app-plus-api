@@ -15,8 +15,6 @@ A deployed version of the app can be found at: `https://pvd-tickets-client.herok
 * if you wish to try out administrator posibilities, please email or Slack PM me the user-email that you want to be admin.
 
 
-## see you tomorrow!
-
 Peter
 
 
