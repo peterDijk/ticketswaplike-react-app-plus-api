@@ -38,7 +38,7 @@ export default () =>
       Comment
     ],
     synchronize: true, // careful with this in production!
-    logging: false,
+    logging: true,
     namingStrategy: new CustomNamingStrategy()
   })
     .then(_ => console.log('Connected to Postgres with TypeORM'))
