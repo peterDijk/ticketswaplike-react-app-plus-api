@@ -3,6 +3,7 @@ import {pageLimitEvents} from '../constants'
 import {Event} from './entity'
 import User from '../users/entity'
 import {Ticket} from '../tickets/entity'
+import Comment from '../comments/entity'
 import { MoreThan} from 'typeorm'
 
 @JsonController()
@@ -55,7 +56,7 @@ export default class EventController {
     else next = null
     if (page > 1) previous = `/events/?page=${page-1}`
     else previous = null
-  
+
     const events = await Event.find({ order: { [orderBy]: direction }, skip, take, where: {endDate : MoreThan(dateNow)}, relations: ['tickets'] })
     return { count, next, previous ,events, range }
   }
@@ -107,9 +108,20 @@ export default class EventController {
 
     const event = await Event.findOne(eventId)
     if (!event) throw new BadRequestError(`Event does not exist`)
+    
     const eventTickets = await Ticket.find({where: {event}})
-    // console.log(eventTickets)
-    await Ticket.remove(eventTickets)
+    if (eventTickets.length > 0) {
+      
+      eventTickets.forEach(async (ticket) => {
+        
+        const ticketComments = await Comment.find({where: {ticket}})
+        if (ticketComments.length > 0) {
+          
+          Comment.remove(ticketComments)
+        }
+      })
+      await Ticket.remove(eventTickets)
+    }
     
     event.remove()
     return event
