@@ -33,9 +33,6 @@ export default class EventController {
     @QueryParam('page') page: number
   ) {
 
-    // const allowedColumnOrder = ['id','name', 'desc', 'location', 'imageUrl', 'dateCreated', 'startDate', 'endDate']
-    // const allowedDirection = ['ASC', 'DESC']
-
     if (!orderBy) orderBy = 'startDate'
     if (!direction) direction = 'ASC'
     
@@ -46,11 +43,14 @@ export default class EventController {
 
     if (!page) page = 1
     const take = pageLimitEvents
-    const skip = (page -1) * take
+    const skip = (page - 1 ) * take
     const totalPages = count / take
     let next
     let previous
-    let range = {first: skip+1, last: (skip+take > count)?count:skip+take}
+    let range = {
+      first: skip+1, 
+      last: (skip + take > count) ? count : skip + take
+    }
 
     if (totalPages > page) next = `/events/?page=${page+1}`
     else next = null
